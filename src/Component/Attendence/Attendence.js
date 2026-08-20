@@ -21,14 +21,15 @@ const Attenddence = () => {
             .then((res) => res.json())
             .then((result) => {
                 setteacherData(result);
-                console.log(result);
+                
             })
             .catch((err) => console.log(err));
     }
 
 
-    function getStudentData() {
-        fetch("http://localhost:5000/api/student/")
+    async function getStudentData(val) {
+        setClassAttendence(val);
+        await fetch("http://localhost:5000/api/student/search?q="+val)
         .then((responce)=>responce.json())
         .then((result)=>setStudentData(result))
     }
@@ -80,50 +81,71 @@ function setAttendance(item, mark) {
     });
 }
 
-    async function submitAttendence()
-    {
-          console.log("ashish",attendanceMark)
-          await fetch("http://localhost:5000/api/attendence/submit",{
-            method:"POST",
-            headers:{
-                    "Content-Type":"application/json",
-                },
-            body:JSON.stringify(attendanceMark)   
-          })
-          .then((responce)=>{
-            responce=responce.json();
-
-
-          })
-          .then((result)=>console.log(result))
-
-
-          
+   async function submitAttendence() {
+    // Check all required fields
+    if (
+        classAttendence === "" ||
+        teacherAttendence === "" ||
+        attenddencedate === ""
+    ) {
+        console.log("Please select all fields");
+        return;
     }
 
-//     function setAttendance(item,mark)
-//     {
-//         console.log(item);
-//         console.log(mark)
-       
-//         setAttendanceMark([
-//     ...attendanceMark,
-//     {
-//         stclass: classAttendence,
-//         teacher: teacherAttendence,
-//         attendencedate: attenddencedate,
-//         studentid: item._id,
-//         student_mark: mark
-//     }
-// ]);
+    // Check all students are marked
+    if (
+        studentData.length !==
+        (attendanceMark.studentAttendence?.length || 0)
+    ) {
+        console.log("Please select all student");
+        return;
+    }
 
-//         console.log("@@@@@",attendanceMark)
-          
-//     }
+    try {
+        const response = await fetch(
+            "http://localhost:5000/api/attendence/submit",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(attendanceMark),
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.log(result.message || "Attendance submission failed");
+            return;
+        }
+
+        console.log("Attendance submitted successfully", result);
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+    async function markAllPresent() {
+           setAttendanceMark(prev => ({
+        ...prev,
+        classId: classAttendence,
+        teacherId: teacherAttendence,
+        attendenceDate: attenddencedate,
+
+        studentAttendence: studentData.map(item => ({
+            studentId: item._id,
+            student_mark: "Present"
+        }))
+    }));
+    }
+
+
     useEffect(() => {
         getclassNamedata();
         getTeacherData();
-        getStudentData();
+       
         const studentList = attendanceMark.studentAttendence || [];
 
     const present = studentList.filter(
@@ -157,7 +179,7 @@ function setAttendance(item, mark) {
                 </p>
             </div>
 
-            <button className="btn btn-success" >
+            <button className="btn btn-success" onClick={markAllPresent}>
                 Mark All Present
             </button>
         </div>
@@ -171,7 +193,10 @@ function setAttendance(item, mark) {
                    
                     <div className="col-md-4">
                         <label className="form-label">className</label>
-                        <select className="form-select" id="className" onChange={(e)=>setClassAttendence(e.target.value)}>
+                        <select className="form-select" id="className" onChange={(e) => {
+    getStudentData(e.target.value);
+    
+  }}>
                             <option value="">Select className</option>
                             {
                                 classNamedata.map((item,index)=>{
