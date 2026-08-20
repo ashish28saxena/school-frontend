@@ -20,6 +20,7 @@ import StudentList from './Component/Student/StudentList';
 import AddStudent from './Component/Student/AddStudent';
 import StudentDetail from './Component/Student/StudentDetail';
 import Attenddence from './Component/Attendence/Attendence';
+import AddendenceList from './Component/Attendence/AddendenceList';
 function App() {
   const [count,setCount]=useState(0)
   return (
@@ -60,6 +61,8 @@ function App() {
                                  <Route path="/Edit-Student/:id" element={<AddStudent />} />
                                   <Route path="/View-Student/:id" element={<StudentDetail />} />
                                   <Route path="/Attenddence-list" element={<Attenddence />} />
+                                  <Route path="/Attenddence-student-list" element={<AddendenceList />} />
+                                  
                                   
                                  
                             </Routes>

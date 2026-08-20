@@ -8,6 +8,8 @@ const Attenddence = () => {
      const [teacherAttendence,setTeacherAttendence]=useState('')
      const [attenddencedate,setAttenddencedate]=useState('')
      const [attendanceMark,setAttendanceMark]=useState([]);
+     const [presentStudent,setPresentStudent]=useState(0)
+      const [absentStudent,setAbsentStudent]=useState(0)
     function getclassNamedata() {
         fetch("http://localhost:5000/api/class/")
             .then((responce) => responce.json())
@@ -30,41 +32,73 @@ const Attenddence = () => {
         .then((responce)=>responce.json())
         .then((result)=>setStudentData(result))
     }
-    function setAttendance(item, mark) {
+function setAttendance(item, mark) {
 
-        setAttendanceMark(prev => {
+    setAttendanceMark(prev => {
 
-            const existingStudent = prev.find(
-                attendance => attendance.studentid === item._id
-            );
+        const studentList = prev.studentAttendence || [];
 
-            // Student already exists → update
-            if (existingStudent) {
+        const existingStudent = studentList.find(
+            attendance => attendance.studentId === item._id
+        );
 
-                return prev.map(attendance =>
-                    attendance.studentid === item._id
+        let updatedStudentAttendence;
+
+        // Student already exists → update
+        if (existingStudent) {
+
+            updatedStudentAttendence = studentList.map(
+                attendance =>
+                    attendance.studentId === item._id
                         ? {
                             ...attendance,
                             student_mark: mark
                         }
                         : attendance
-                );
-            }
+            );
+
+        } else {
 
             // Student doesn't exist → add
-            return [
-                ...prev,
+            updatedStudentAttendence = [
+                ...studentList,
                 {
-                    stclass: classAttendence,
-                    teacher: teacherAttendence,
-                    attendencedate: attenddencedate,
-                    studentid: item._id,
+                    studentId: item._id,
                     student_mark: mark
                 }
             ];
-        });
+        }
 
-        console.log("@@@@@",attendanceMark)
+        return {
+            ...prev,
+            classId: classAttendence,
+            teacherId: teacherAttendence,
+            attendenceDate: attenddencedate,
+            studentAttendence: updatedStudentAttendence
+        };
+
+    });
+}
+
+    async function submitAttendence()
+    {
+          console.log("ashish",attendanceMark)
+          await fetch("http://localhost:5000/api/attendence/submit",{
+            method:"POST",
+            headers:{
+                    "Content-Type":"application/json",
+                },
+            body:JSON.stringify(attendanceMark)   
+          })
+          .then((responce)=>{
+            responce=responce.json();
+
+
+          })
+          .then((result)=>console.log(result))
+
+
+          
     }
 
 //     function setAttendance(item,mark)
@@ -90,7 +124,19 @@ const Attenddence = () => {
         getclassNamedata();
         getTeacherData();
         getStudentData();
-    }, [])
+        const studentList = attendanceMark.studentAttendence || [];
+
+    const present = studentList.filter(
+        student => student.student_mark === "Present"
+    ).length;
+
+    const absent = studentList.filter(
+        student => student.student_mark === "Absent"
+    ).length;
+
+    setPresentStudent(present);
+    setAbsentStudent(absent);
+    }, [attendanceMark.studentAttendence])
     return (
         <div>
             
@@ -128,9 +174,9 @@ const Attenddence = () => {
                         <select className="form-select" id="className" onChange={(e)=>setClassAttendence(e.target.value)}>
                             <option value="">Select className</option>
                             {
-                                classNamedata.map((item)=>{
+                                classNamedata.map((item,index)=>{
                                         return(
-                                            <option value={item._id}>className {item.className}</option>
+                                            <option value={item._id} key={index}>className {item.className}</option>
                                         )
                                 })
                             }
@@ -145,9 +191,9 @@ const Attenddence = () => {
                         <select className="form-select" id="section" onChange={(e)=>setTeacherAttendence(e.target.value)}>
                             <option value="">Select Teacher</option>
                             {
-                                teacherData.map((item)=>{
+                                teacherData.map((item,index)=>{
                                       return(
-                                        <option value={item._id}>{item.name}</option>
+                                        <option value={item._id} key={index}>{item.name}</option>
                                       )
                                 })
                             }
@@ -208,7 +254,7 @@ const Attenddence = () => {
                         <div className="col-4 summary-box">
                             <div className="summary-number text-success"
                                  id="presentCount">
-                                0
+                                {presentStudent}
                             </div>
                             <div className="summary-label">
                                 Present
@@ -218,7 +264,7 @@ const Attenddence = () => {
                         <div className="col-4 summary-box">
                             <div className="summary-number text-danger"
                                  id="absentCount">
-                                0
+                                {absentStudent}
                             </div>
                             <div className="summary-label">
                                 Absent
@@ -247,6 +293,11 @@ const Attenddence = () => {
                         <tbody id="studentTable">
                             {
                                 studentData.map((item,index)=>{
+                                    const attendance = attendanceMark.studentAttendence?.find(
+            attendance => attendance.studentId === item._id
+        );
+       
+       
                                     return(
                                         <tr key={index}>
                                 <td>{index+1}</td>
@@ -257,17 +308,26 @@ const Attenddence = () => {
                                 <td>
 
                                     <button
-                                        className="btn btn-success btn-sm status-btn me-2"
-                                        onClick={()=>setAttendance(item,'present')}>
-                                        Present
-                                    </button>
+                        className={`btn btn-sm status-btn me-2 ${
+                            attendance?.student_mark === "Present"
+                                ? "btn-success"
+                                : "btn-outline-success"
+                        }`}
+                        onClick={() => setAttendance(item, "Present")}
+                    >
+                        Present
+                    </button>
 
                                     <button
-                                        className="btn btn-outline-danger btn-sm status-btn"
-                                        onClick={()=>setAttendance(item,'absent')}
-                                        >
-                                        Absent
-                                    </button>
+                        className={`btn btn-sm status-btn ${
+                            attendance?.student_mark === "Absent"
+                                ? "btn-danger"
+                                : "btn-outline-danger"
+                        }`}
+                        onClick={() => setAttendance(item, "Absent")}
+                    >
+                        Absent
+                    </button>
 
                                 </td>
                             </tr>
@@ -291,7 +351,7 @@ const Attenddence = () => {
                 <div className="text-end mt-4">
 
                     <button className="btn btn-primary px-4"
-                            >
+                            onClick={submitAttendence}>
                         Submit Attendance
                     </button>
 

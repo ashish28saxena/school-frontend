@@ -21,6 +21,8 @@ const Header=()=>{
                             <Link to="/Student-List" className="nav-link">Student List</Link>
                             <Link to="/login" className="nav-link">Login</Link>
                             <Link to="/Attenddence-list" className="nav-link">Attendence</Link>
+                            <Link to="/Attenddence-student-list" className="nav-link">Attendence View</Link>
+                            
 
                             
                             
