@@ -46,9 +46,8 @@ function Header() {
       <div className="container-fluid">
 
         {/* Logo */}
-        <a className="navbar-brand fw-bold" href="/">
-          School Management
-        </a>
+        
+        <Link to="/"className="navbar-brand fw-bold">School Management</Link>
 
         {/* Mobile Button */}
         <button
@@ -66,21 +65,16 @@ function Header() {
 
             {/* ================= MASTER ================= */}
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-bs-toggle="dropdown"
-              >
-                Master
-              </a>
+               <Link to="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Master</Link>
+              
 
               <ul className="dropdown-menu">
 
                 {/* Class */}
                 <li className="submenu">
-                  <a className="dropdown-item dropdown-toggle" href="#">
+                  <Link to="/" className="dropdown-item dropdown-toggle" >
                     Class
-                  </a>
+                  </Link>
 
                   <ul className="dropdown-menu">
                     <li>
@@ -93,56 +87,11 @@ function Header() {
                       <Link to="/Add-Class" className="dropdown-item">Add Class</Link>
                     </li>
 
-                    <li>
-
-                      <a className="dropdown-item" href="/class/edit">
-                        Edit Class
-                      </a>
-                    </li>
+                   
                   </ul>
                 </li>
 
-                {/* Section */}
-                <li className="submenu">
-                  <a className="dropdown-item dropdown-toggle" href="#">
-                    Section
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="/section/add">
-                        Add Section
-                      </a>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="/section/edit">
-                        Edit Section
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                {/* Teacher */}
-                <li className="submenu">
-                  <a className="dropdown-item dropdown-toggle" href="#">
-                    Teacher
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="/teacher/add">
-                        Add Teacher
-                      </a>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="/teacher/edit">
-                        Edit Teacher
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+            
 
               </ul>
             </li>
@@ -150,33 +99,29 @@ function Header() {
 
             {/* ================= STUDENT ================= */}
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-link dropdown-toggle"
-                href="#"
+                to="#"
                 data-bs-toggle="dropdown"
               >
                 Student
-              </a>
+              </Link>
 
               <ul className="dropdown-menu">
 
                 <li>
-                  <a className="dropdown-item" href="/student/add">
+                  <Link className="dropdown-item" to="/Add-Student">
                     Student Registration
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a className="dropdown-item" href="/student/list">
+                  <Link className="dropdown-item" href="/Student-List">
                     Student List
-                  </a>
+                  </Link>
                 </li>
 
-                <li>
-                  <a className="dropdown-item" href="/student/edit">
-                    Edit Student
-                  </a>
-                </li>
+                
 
               </ul>
             </li>
@@ -184,26 +129,26 @@ function Header() {
 
             {/* ================= ATTENDANCE ================= */}
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-link dropdown-toggle"
-                href="#"
+                to="#"
                 data-bs-toggle="dropdown"
               >
                 Attendance
-              </a>
+              </Link>
 
               <ul className="dropdown-menu">
 
                 <li>
-                  <a className="dropdown-item" href="/attendance/take">
+                  <Link className="dropdown-item" to="/Attenddence-list">
                     Take Attendance
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a className="dropdown-item" href="/attendance/report">
+                  <Link className="dropdown-item" to="/Attenddence-student-list">
                     Attendance Report
-                  </a>
+                  </Link>
                 </li>
 
               </ul>
