@@ -25,6 +25,9 @@ import AddTeacher from './Component/Teacher/AddTeacher';
 import Profile from './Component/Teacher/Profile';
 import AssignSubject from './Component/Teacher/AssignSubject';
 import AssignClassTeacher from './Component/Teacher/AssignClassTeacher';
+import Salary from './Component/Teacher/Salary';
+import AssignClass from './Component/Teacher/AssignClass';
+import TeacherAttendance from './Component/Teacher/TeacherAttendance'
 function App() {
   const [count,setCount]=useState(0)
   return (
@@ -70,6 +73,9 @@ function App() {
                                    <Route path="/Teacher-Profile/:id" element={<Profile />} />
                                    <Route path="/Assign-Subject" element={<AssignSubject />} />
                                    <Route path="/Assign-Class-Teacher" element={<AssignClassTeacher />} />
+                                   <Route path="/Teacher-Salary" element={<Salary />} />
+                                   <Route path="/Assign-Class" element={<AssignClass />} />
+                                   <Route path="/Teacher-Attendance" element={<TeacherAttendance />} />
                                    
                                    
                                   

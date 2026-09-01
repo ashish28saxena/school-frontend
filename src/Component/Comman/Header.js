@@ -231,6 +231,7 @@ function Header() {
                     <Link to="Teacher-Profile/1" className="dropdown-item">Teacher Profile</Link>
                   
                 </li>
+                
 
                 <li>
                     <Link to="/Assign-Subject" className="dropdown-item">Assign Subject</Link>
@@ -243,22 +244,155 @@ function Header() {
                 </li>
 
                 <li>
-                    <Link to="/Add-Teacher" className="dropdown-item">Assign Section</Link>
+                    <Link to="/Assign-Class" className="dropdown-item">Assign Section</Link>
                   
                 </li>
 
                 <li>
-                    <Link to="/Add-Teacher" className="dropdown-item">Teacher Attendance</Link>
+                    <Link to="/Teacher-Attendance" className="dropdown-item">Teacher Attendance</Link>
                   
                 </li>
 
                 <li>
-                    <Link to="/Add-Teacher" className="dropdown-item">Salary Details</Link>
+                    <Link to="/Teacher-Salary" className="dropdown-item">Salary Details</Link>
                   
                 </li>
 
               </ul>
             </li>
+
+
+             {/* ================= Class & Section Management ================= */}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+              >
+                Class & Section Management
+              </a>
+
+              <ul className="dropdown-menu">
+
+                <li>
+                      
+                      <Link to="/Class-List" className="dropdown-item">Class List</Link>
+                    </li>
+
+                    <li>
+                      
+                      <Link to="/Add-Class" className="dropdown-item">Add Class</Link>
+                    </li>
+
+                <li>
+                    <Link to="Teacher-Profile/1" className="dropdown-item">Add Section</Link>
+                  
+                </li>
+                
+
+                <li>
+                    <Link to="/Assign-Subject" className="dropdown-item">Assign Class Teacher</Link>
+                  
+                </li>
+
+                <li>
+                    <Link to="/Assign-Class-Teacher" className="dropdown-item">Assign Students</Link>
+                  
+                </li>
+
+                <li>
+                    <Link to="/Assign-Class" className="dropdown-item">Assign Subjects</Link>
+                  
+                </li>
+
+                
+
+              </ul>
+            </li>
+
+
+             {/* ================= Subject Management ================= */}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+              >
+                Subject Management
+              </a>
+
+              <ul className="dropdown-menu">
+
+                <li>
+                      
+                      <Link to="/Class-List" className="dropdown-item">Add Subject</Link>
+                    </li>
+
+                    <li>
+                      
+                      <Link to="/Add-Class" className="dropdown-item">Subject Code</Link>
+                    </li>
+
+                <li>
+                    <Link to="Teacher-Profile/1" className="dropdown-item">Assign Teacher</Link>
+                  
+                </li>
+                
+
+                <li>
+                    <Link to="/Assign-Subject" className="dropdown-item">Assign Class</Link>
+                  
+                </li>
+
+                
+
+                
+
+              </ul>
+            </li>
+
+
+             {/* ================= Timetable Management ================= */}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+              >
+                Timetable Management
+              </a>
+
+              <ul className="dropdown-menu">
+
+                <li>
+                      
+                      <Link to="/Class-List" className="dropdown-item">Create Timetable</Link>
+                    </li>
+
+                    <li>
+                      
+                      <Link to="/Add-Class" className="dropdown-item">Class-wise Timetable</Link>
+                    </li>
+
+                <li>
+                    <Link to="Teacher-Profile/1" className="dropdown-item">Teacher-wise Timetable</Link>
+                  
+                </li>
+                
+
+                <li>
+                    <Link to="/Assign-Subject" className="dropdown-item">Subject-wise Schedule</Link>
+                  
+                </li>
+
+                
+
+                
+
+              </ul>
+            </li>
+
+            
 
           </ul>
 
