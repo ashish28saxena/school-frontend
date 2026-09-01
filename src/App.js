@@ -21,6 +21,10 @@ import AddStudent from './Component/Student/AddStudent';
 import StudentDetail from './Component/Student/StudentDetail';
 import Attenddence from './Component/Attendence/Attendence';
 import AddendenceList from './Component/Attendence/AddendenceList';
+import AddTeacher from './Component/Teacher/AddTeacher';
+import Profile from './Component/Teacher/Profile';
+import AssignSubject from './Component/Teacher/AssignSubject';
+import AssignClassTeacher from './Component/Teacher/AssignClassTeacher';
 function App() {
   const [count,setCount]=useState(0)
   return (
@@ -62,6 +66,13 @@ function App() {
                                   <Route path="/View-Student/:id" element={<StudentDetail />} />
                                   <Route path="/Attenddence-list" element={<Attenddence />} />
                                   <Route path="/Attenddence-student-list" element={<AddendenceList />} />
+                                  <Route path="/Add-Teacher" element={<AddTeacher />} />
+                                   <Route path="/Teacher-Profile/:id" element={<Profile />} />
+                                   <Route path="/Assign-Subject" element={<AssignSubject />} />
+                                   <Route path="/Assign-Class-Teacher" element={<AssignClassTeacher />} />
+                                   
+                                   
+                                  
                                   
                                   
                                  
