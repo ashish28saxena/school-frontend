@@ -39,323 +39,278 @@
 
 import React from "react";
 import "./Header.css";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <nav className="sm-navbar navbar navbar-expand-lg">
       <div className="container-fluid">
 
         {/* Logo */}
-        
-        <Link to="/"className="navbar-brand fw-bold">School Management</Link>
+        <Link to="/" className="sm-brand">
+          <span className="sm-brand-mark">SM</span>
+          <span className="sm-brand-text">School Management</span>
+        </Link>
 
         {/* Mobile Button */}
         <button
-          className="navbar-toggler"
+          className="sm-toggler navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#schoolNavbar"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="sm-toggler-bar"></span>
+          <span className="sm-toggler-bar"></span>
+          <span className="sm-toggler-bar"></span>
         </button>
 
         <div className="collapse navbar-collapse" id="schoolNavbar">
 
-          <ul className="navbar-nav ms-4">
+          <ul className="sm-nav navbar-nav ms-3">
 
             {/* ================= MASTER ================= */}
             <li className="nav-item dropdown">
-               <Link to="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Master</Link>
-              
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Master
+              </Link>
 
-              <ul className="dropdown-menu">
-
-                {/* Class */}
+              <ul className="sm-dropdown dropdown-menu">
                 <li className="submenu">
-                  <Link to="/" className="dropdown-item dropdown-toggle" >
+                  <Link to="#" className="sm-dropdown-item dropdown-toggle">
                     Class
                   </Link>
-
-                  <ul className="dropdown-menu">
+                  <ul className="sm-dropdown dropdown-menu">
                     <li>
-                      
-                      <Link to="/Class-List" className="dropdown-item">Class List</Link>
+                      <Link to="/Class-List" className="sm-dropdown-item">Class List</Link>
                     </li>
-
                     <li>
-                      
-                      <Link to="/Add-Class" className="dropdown-item">Add Class</Link>
+                      <Link to="/Add-Class" className="sm-dropdown-item">Add Class</Link>
                     </li>
-
-                   
                   </ul>
                 </li>
-
-            
-
               </ul>
             </li>
-
 
             {/* ================= STUDENT ================= */}
             <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle"
-                to="#"
-                data-bs-toggle="dropdown"
-              >
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
                 Student
               </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/Add-Student">
-                    Student Registration
-                  </Link>
+                  <Link to="/Add-Student" className="sm-dropdown-item">Student Registration</Link>
                 </li>
-
                 <li>
-                  <Link className="dropdown-item" href="/Student-List">
-                    Student List
-                  </Link>
+                  <Link to="/Student-List" className="sm-dropdown-item">Student List</Link>
                 </li>
-
-                
-
               </ul>
             </li>
-
 
             {/* ================= ATTENDANCE ================= */}
             <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle"
-                to="#"
-                data-bs-toggle="dropdown"
-              >
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
                 Attendance
               </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/Attenddence-list">
-                    Take Attendance
-                  </Link>
+                  <Link to="/Attenddence-list" className="sm-dropdown-item">Take Attendance</Link>
                 </li>
-
                 <li>
-                  <Link className="dropdown-item" to="/Attenddence-student-list">
-                    Attendance Report
-                  </Link>
+                  <Link to="/Attenddence-student-list" className="sm-dropdown-item">Attendance Report</Link>
                 </li>
-
               </ul>
             </li>
 
-
-             {/* ================= Teacher Management ================= */}
+            {/* ================= Teacher Management ================= */}
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-bs-toggle="dropdown"
-              >
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
                 Teacher Management
-              </a>
+              </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                    <Link to="/Add-Teacher" className="dropdown-item">Add Teacher</Link>
-                    
+                  <Link to="/Add-Teacher" className="sm-dropdown-item">Add Teacher</Link>
                 </li>
-
                 <li>
-                    <Link to="Teacher-Profile/1" className="dropdown-item">Teacher Profile</Link>
-                  
+                  <Link to="/Teacher-List" className="sm-dropdown-item">Teacher List</Link>
                 </li>
                 
-
                 <li>
-                    <Link to="/Assign-Subject" className="dropdown-item">Assign Subject</Link>
-                  
+                  <Link to="/Teacher-Profile/1" className="sm-dropdown-item">Teacher Profile</Link>
                 </li>
-
                 <li>
-                    <Link to="/Assign-Class-Teacher" className="dropdown-item">Assign Class</Link>
-                  
+                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subject</Link>
                 </li>
-
                 <li>
-                    <Link to="/Assign-Class" className="dropdown-item">Assign Section</Link>
-                  
+                  <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class</Link>
                 </li>
-
                 <li>
-                    <Link to="/Teacher-Attendance" className="dropdown-item">Teacher Attendance</Link>
-                  
+                  <Link to="/Assign-Class" className="sm-dropdown-item">Assign Section</Link>
                 </li>
-
                 <li>
-                    <Link to="/Teacher-Salary" className="dropdown-item">Salary Details</Link>
-                  
+                  <Link to="/Teacher-Attendance" className="sm-dropdown-item">Teacher Attendance</Link>
                 </li>
-
+                <li>
+                  <Link to="/Teacher-Salary" className="sm-dropdown-item">Salary Details</Link>
+                </li>
               </ul>
             </li>
 
-
-             {/* ================= Class & Section Management ================= */}
+            {/* ================= Class & Section Management ================= */}
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-bs-toggle="dropdown"
-              >
-                Class & Section Management
-              </a>
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Class & Section
+              </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                      
-                      <Link to="/Class-List" className="dropdown-item">Class List</Link>
-                    </li>
-
-                    <li>
-                      
-                      <Link to="/Add-Class" className="dropdown-item">Add Class</Link>
-                    </li>
-
-                <li>
-                    <Link to="Teacher-Profile/1" className="dropdown-item">Add Section</Link>
-                  
+                  <Link to="/Class-List" className="sm-dropdown-item">Class List</Link>
                 </li>
-                
-
                 <li>
-                    <Link to="/Assign-Subject" className="dropdown-item">Assign Class Teacher</Link>
-                  
+                  <Link to="/Add-Class" className="sm-dropdown-item">Add Class</Link>
                 </li>
-
                 <li>
-                    <Link to="/Assign-Class-Teacher" className="dropdown-item">Assign Students</Link>
-                  
+                  <Link to="/Add-Section" className="sm-dropdown-item">Add Section</Link>
                 </li>
-
                 <li>
-                    <Link to="/Assign-Class" className="dropdown-item">Assign Subjects</Link>
-                  
+                  <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class Teacher</Link>
                 </li>
-
-                
-
+                <li>
+                  <Link to="/Assign-Students" className="sm-dropdown-item">Assign Students</Link>
+                </li>
+                <li>
+                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subjects</Link>
+                </li>
               </ul>
             </li>
 
-
-             {/* ================= Subject Management ================= */}
+            {/* ================= Subject Management ================= */}
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-bs-toggle="dropdown"
-              >
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
                 Subject Management
-              </a>
+              </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                      
-                      <Link to="/Class-List" className="dropdown-item">Add Subject</Link>
-                    </li>
-
-                    <li>
-                      
-                      <Link to="/Add-Class" className="dropdown-item">Subject Code</Link>
-                    </li>
-
+                  <Link to="/Add-Subject" className="sm-dropdown-item">Add Subject</Link>
+                </li>
                 <li>
-                    <Link to="Teacher-Profile/1" className="dropdown-item">Assign Teacher</Link>
-                  
+                  <Link to="/Subject-List" className="sm-dropdown-item">Subject List</Link>
                 </li>
                 
-
                 <li>
-                    <Link to="/Assign-Subject" className="dropdown-item">Assign Class</Link>
-                  
+                  <Link to="/Subject-Code" className="sm-dropdown-item">Subject Code</Link>
                 </li>
-
-                
-
-                
-
+                <li>
+                  <Link to="/Assign-Subject-Teacher" className="sm-dropdown-item">Assign Teacher</Link>
+                </li>
+                <li>
+                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Class</Link>
+                </li>
               </ul>
             </li>
 
-
-             {/* ================= Timetable Management ================= */}
+            {/* ================= Timetable Management ================= */}
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-bs-toggle="dropdown"
-              >
-                Timetable Management
-              </a>
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Timetable
+              </Link>
 
-              <ul className="dropdown-menu">
-
+              <ul className="sm-dropdown dropdown-menu">
                 <li>
-                      
-                      <Link to="/Class-List" className="dropdown-item">Create Timetable</Link>
-                    </li>
-
-                    <li>
-                      
-                      <Link to="/Add-Class" className="dropdown-item">Class-wise Timetable</Link>
-                    </li>
-
-                <li>
-                    <Link to="Teacher-Profile/1" className="dropdown-item">Teacher-wise Timetable</Link>
-                  
+                  <Link to="/Create-Timetable" className="sm-dropdown-item">Create Timetable</Link>
                 </li>
-                
-
                 <li>
-                    <Link to="/Assign-Subject" className="dropdown-item">Subject-wise Schedule</Link>
-                  
+                  <Link to="/Classwise-Timetable" className="sm-dropdown-item">Class-wise Timetable</Link>
                 </li>
-
-                
-
-                
-
+                <li>
+                  <Link to="/Teacherwise-Timetable" className="sm-dropdown-item">Teacher-wise Timetable</Link>
+                </li>
+                <li>
+                  <Link to="/Subjectwise-Schedule" className="sm-dropdown-item">Subject-wise Schedule</Link>
+                </li>
               </ul>
             </li>
 
-            
+            {/* ================= Examination Management ================= */}
+            <li className="nav-item dropdown">
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Examination
+              </Link>
+
+              <ul className="sm-dropdown dropdown-menu">
+                <li>
+                  <Link to="/Create-Exam" className="sm-dropdown-item">Create Exam</Link>
+                </li>
+                <li>
+                  <Link to="/Mid-Term" className="sm-dropdown-item">Mid Term</Link>
+                </li>
+                <li>
+                  <Link to="/Final-Exam" className="sm-dropdown-item">Final Exam</Link>
+                </li>
+                <li>
+                  <Link to="/Unit-Test" className="sm-dropdown-item">Unit Test</Link>
+                </li>
+                <li>
+                  <Link to="/Subjectwise-Marks" className="sm-dropdown-item">Subject-wise Marks</Link>
+                </li>
+                <li>
+                  <Link to="/Grade-Calculation" className="sm-dropdown-item">Grade Calculation</Link>
+                </li>
+                <li>
+                  <Link to="/Result-Generation" className="sm-dropdown-item">Result Generation</Link>
+                </li>
+              </ul>
+            </li>
+
+            {/* ================= Result & Report Card ================= */}
+            <li className="nav-item dropdown">
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Result & Report Card
+              </Link>
+
+              <ul className="sm-dropdown dropdown-menu">
+                <li>
+                  <Link to="/Student-Result" className="sm-dropdown-item">Student Result</Link>
+                </li>
+                <li>
+                  <Link to="/Percentage-Calculation" className="sm-dropdown-item">Percentage Calculation</Link>
+                </li>
+                <li>
+                  <Link to="/Grade" className="sm-dropdown-item">Grade</Link>
+                </li>
+                <li>
+                  <Link to="/Rank" className="sm-dropdown-item">Rank</Link>
+                </li>
+                <li>
+                  <Link to="/Pass-Fail" className="sm-dropdown-item">Pass / Fail</Link>
+                </li>
+                <li>
+                  <Link to="/Report-Card-PDF" className="sm-dropdown-item">Download Report Card PDF</Link>
+                </li>
+              </ul>
+            </li>
 
           </ul>
 
           {/* Right Side */}
-          <ul className="navbar-nav ms-auto">
-
-            <li className="nav-item">
-              <a className="nav-link" href="/profile">
-                Profile
-              </a>
+          <ul className="sm-nav-right navbar-nav ms-auto">
+            <li className="nav-item dropdown">
+              <Link to="#" className="sm-profile dropdown-toggle" data-bs-toggle="dropdown">
+                <span className="sm-avatar">A</span>
+                <span className="sm-profile-name">Admin</span>
+              </Link>
+              <ul className="sm-dropdown sm-dropdown--right dropdown-menu">
+                <li>
+                  <Link to="/profile" className="sm-dropdown-item">Profile</Link>
+                </li>
+                <li>
+                  <Link to="/logout" className="sm-dropdown-item sm-dropdown-item--danger">Logout</Link>
+                </li>
+              </ul>
             </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="/logout">
-                Logout
-              </a>
-            </li>
-
           </ul>
 
         </div>

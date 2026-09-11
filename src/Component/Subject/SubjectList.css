@@ -1,0 +1,274 @@
+/* ============================================================
+   Subject List — table page
+   Same token system as Header.css / AddSubject.css
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600&display=swap');
+
+:root {
+  --sm-ink-900: #16223b;
+  --sm-ink-800: #1c2c4a;
+  --sm-amber: #e2a83d;
+  --sm-amber-dim: #c98f2b;
+  --sm-paper: #f4f1ea;
+  --sm-muted: #6d7688;
+  --sm-line: #e3ddce;
+  --sm-line-strong: #d9d3c4;
+  --sm-success: #4b8b6f;
+  --sm-success-bg: #e8f1ec;
+  --sm-danger: #b95c45;
+  --sm-danger-bg: #f7e9e5;
+}
+
+.subl-wrap {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--sm-paper);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.subl-card {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border: 1px solid var(--sm-line-strong);
+  border-top: 3px solid var(--sm-amber);
+  border-radius: 8px;
+  padding: 1.75rem;
+}
+
+/* Header */
+.subl-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.subl-header h2 {
+  font-family: 'Lora', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--sm-ink-900);
+  margin: 0 0 0.2rem;
+}
+
+.subl-header p {
+  font-size: 0.82rem;
+  color: var(--sm-muted);
+  margin: 0;
+}
+
+.subl-add-btn {
+  background: var(--sm-ink-900);
+  color: var(--sm-paper);
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.subl-add-btn:hover {
+  background: var(--sm-amber-dim);
+  color: var(--sm-ink-900);
+}
+
+/* Toolbar */
+.subl-toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.subl-search {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--sm-line-strong);
+  border-radius: 6px;
+  background: var(--sm-paper);
+  color: var(--sm-ink-900);
+}
+
+.subl-filter {
+  font-size: 0.85rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--sm-line-strong);
+  border-radius: 6px;
+  background: var(--sm-paper);
+  color: var(--sm-ink-900);
+  min-width: 150px;
+}
+
+.subl-search:focus,
+.subl-filter:focus {
+  outline: none;
+  border-color: var(--sm-amber);
+  box-shadow: 0 0 0 3px rgba(226, 168, 61, 0.18);
+}
+
+/* Table */
+.subl-table-scroll {
+  overflow-x: auto;
+}
+
+.subl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.subl-table thead th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--sm-muted);
+  letter-spacing: 0.03em;
+  padding: 0 0.6rem 0.6rem;
+  border-bottom: 1px solid var(--sm-line-strong);
+  white-space: nowrap;
+}
+
+.subl-table tbody td {
+  padding: 0.75rem 0.6rem;
+  border-bottom: 1px solid var(--sm-line);
+  color: var(--sm-ink-900);
+  vertical-align: middle;
+}
+
+.subl-table tbody tr:hover {
+  background: var(--sm-paper);
+}
+
+.subl-name {
+  font-weight: 600;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.subl-code {
+  font-family: 'Inter', sans-serif;
+  color: var(--sm-muted);
+}
+
+.subl-empty {
+  text-align: center;
+  color: var(--sm-muted);
+  padding: 2rem 0;
+}
+
+/* Type badges */
+.subl-type {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #eef1f6;
+  color: var(--sm-ink-800);
+}
+
+.subl-type--core {
+  background: #e6ecf5;
+  color: #2f4a7c;
+}
+
+.subl-type--elective {
+  background: #f4ecdb;
+  color: var(--sm-amber-dim);
+}
+
+.subl-type--extracurricular {
+  background: #ece5f4;
+  color: #6b4a9c;
+}
+
+/* Status pill (clickable toggle) */
+.subl-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  border-radius: 20px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.subl-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.subl-status.is-active {
+  background: var(--sm-success-bg);
+  color: var(--sm-success);
+}
+
+.subl-status.is-active .subl-status-dot {
+  background: var(--sm-success);
+}
+
+.subl-status.is-inactive {
+  background: var(--sm-danger-bg);
+  color: var(--sm-danger);
+}
+
+.subl-status.is-inactive .subl-status-dot {
+  background: var(--sm-danger);
+}
+
+/* Actions */
+.subl-actions-col {
+  white-space: nowrap;
+}
+
+.subl-icon-btn {
+  border: 1px solid var(--sm-line-strong);
+  background: #ffffff;
+  color: var(--sm-ink-800);
+  border-radius: 5px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.4rem;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.subl-icon-btn:hover {
+  border-color: var(--sm-amber);
+  color: var(--sm-amber-dim);
+}
+
+.subl-icon-btn--danger:hover {
+  border-color: var(--sm-danger);
+  color: var(--sm-danger);
+}
+
+@media (max-width: 560px) {
+  .subl-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .subl-toolbar {
+    flex-direction: column;
+  }
+}
