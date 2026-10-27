@@ -11,13 +11,13 @@ const Attenddence = () => {
      const [presentStudent,setPresentStudent]=useState(0)
       const [absentStudent,setAbsentStudent]=useState(0)
     function getclassNamedata() {
-        fetch("http://localhost:5000/api/class/")
+        fetch("https://school-management-backend-ochre.vercel.app/api/class/")
             .then((responce) => responce.json())
             .then((result) => setclassNameData(result))
     }
 
     function getTeacherData() {
-        fetch("http://localhost:5000/api/user/userList")
+        fetch("https://school-management-backend-ochre.vercel.app/api/user/userList")
             .then((res) => res.json())
             .then((result) => {
                 setteacherData(result);
@@ -29,7 +29,7 @@ const Attenddence = () => {
 
     async function getStudentData(val) {
         setClassAttendence(val);
-        await fetch("http://localhost:5000/api/student/search?q="+val)
+        await fetch("https://school-management-backend-ochre.vercel.app/api/student/search?q="+val)
         .then((responce)=>responce.json())
         .then((result)=>setStudentData(result))
     }
@@ -103,7 +103,7 @@ function setAttendance(item, mark) {
 
     try {
         const response = await fetch(
-            "http://localhost:5000/api/attendence/submit",
+            "https://school-management-backend-ochre.vercel.app/api/attendence/submit",
             {
                 method: "POST",
                 headers: {

@@ -32,7 +32,7 @@ const AddStudent = () => {
     const [bloodGroupData,setBloodGroupData]=useState(['A+','A-','B+','B-','AB+','AB-','O+','O-'])
     function getClassData()
     {
-           fetch("http://localhost:5000/api/class/")
+           fetch("https://school-management-backend-ochre.vercel.app/api/class/")
            .then((responce)=>responce.json())
            .then((result)=>setClassData(result))
                       
@@ -80,7 +80,7 @@ const AddStudent = () => {
 
          
 
-        const response = await fetch("http://localhost:5000/api/student/submit",{
+        const response = await fetch("https://school-management-backend-ochre.vercel.app/api/student/submit",{
             method:"POST",
             body:formData
         })

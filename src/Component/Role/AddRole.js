@@ -12,7 +12,7 @@ const AddRole=()=>{
 
     function getData()
     {
-        fetch("http://localhost:5000/api/role/Edit/"+id)
+        fetch("https://school-management-backend-ochre.vercel.app/api/role/Edit/"+id)
         .then((responce)=>responce.json())
         .then((result)=>setRole(result.name))
     }
@@ -21,7 +21,7 @@ const AddRole=()=>{
     {
           if(id)
           {
-            fetch("http://localhost:5000/api/role/update/"+id,{
+            fetch("https://school-management-backend-ochre.vercel.app/api/role/update/"+id,{
                 method:"put",
                 headers:{
                     "Content-Type":"application/json",
@@ -35,7 +35,7 @@ const AddRole=()=>{
             .then((result)=>console.log(result))
 
           }else{
-            fetch("http://localhost:5000/api/role/submit",{
+            fetch("https://school-management-backend-ochre.vercel.app/api/role/submit",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",

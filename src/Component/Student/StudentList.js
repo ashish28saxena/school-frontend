@@ -5,7 +5,7 @@ const StudentList=()=>{
     const [data,setData]=useState([]);
     async function deleteStusent(index)
     {
-            let result=await fetch("http://localhost:5000/api/student/delete/"+index,{
+            let result=await fetch("https://school-management-backend-ochre.vercel.app/api/student/delete/"+index,{
                 method:"DELETE"
             })
             .then((responce)=>responce.json())
@@ -20,7 +20,7 @@ const StudentList=()=>{
 
     function getData()
     {
-        fetch("http://localhost:5000/api/student/")
+        fetch("https://school-management-backend-ochre.vercel.app/api/student/")
         .then((responce)=>responce.json())
         .then((result)=>setData(result))
     }
@@ -90,7 +90,7 @@ const StudentList=()=>{
               <td>{item.parentMobile}</td>
               <td>{item.emergencyContact}</td>
               <td><img width={50}
-  src={`http://localhost:5000/uploads/${item.StudentPhoto}`}
+  src={`https://school-management-backend-ochre.vercel.app/uploads/${item.StudentPhoto}`}
   alt="Student"
 /></td>
 <td>

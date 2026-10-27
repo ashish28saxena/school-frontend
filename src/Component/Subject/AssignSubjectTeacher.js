@@ -6,7 +6,7 @@ const [classData,setClassData]=useState([])
 const [subjects, setSubjects] = useState([]);
 const [message, setMessage] = useState("");
       async function getClassdata() {
-    await fetch("http://localhost:5000/api/class/")
+    await fetch("https://school-management-backend-ochre.vercel.app/api/class/")
         .then((response) => response.json())
         .then((result) => setClassData(result))
         .catch((error) => console.log(error));
@@ -14,7 +14,7 @@ const [message, setMessage] = useState("");
 
   async function getSubjectData()
   {
-      const response = await fetch("http://localhost:5000/api/subject");
+      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject");
         const result = await response.json();
 
         setSubjects(result.data || []);

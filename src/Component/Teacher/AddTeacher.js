@@ -71,7 +71,7 @@ function AddTeacher() {
   }
 
   const response = await fetch(
-    "http://localhost:5000/api/teacher/submit",
+    "https://school-management-backend-ochre.vercel.app/api/teacher/submit",
     {
       method: "POST",
       body: formData

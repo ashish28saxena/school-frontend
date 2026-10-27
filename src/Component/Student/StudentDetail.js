@@ -6,7 +6,7 @@ const StudentDetail=()=>{
     const {id}=useParams();
     async function getdata()
     {
-        fetch("http://localhost:5000/api/student/view/"+id)
+        fetch("https://school-management-backend-ochre.vercel.app/api/student/view/"+id)
         .then((responce)=>responce.json())
         .then((result)=>setData(result))
     }
@@ -52,7 +52,7 @@ const StudentDetail=()=>{
                     <div class="col-md-2 text-center">
 
                         <img
-                            src={`http://localhost:5000/uploads/${data.StudentPhoto}`}
+                            src={`https://school-management-backend-ochre.vercel.app/uploads/${data.StudentPhoto}`}
                             class="student-photo"
                             alt="Student Photo"/>
 

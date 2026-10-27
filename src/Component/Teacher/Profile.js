@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
       const [teacherdata,setData]=useState([])
       async function getTeacherDetail()
       {
-                    await fetch( `http://localhost:5000/api/teacher/edit/${id}`)
+                    await fetch( `https://school-management-backend-ochre.vercel.app/api/teacher/edit/${id}`)
                     .then((response)=>response.json())
                     .then((result)=>setData(result.data))
       }
@@ -25,7 +25,7 @@ import { useParams } from "react-router-dom";
             <div className="card-header bg-primary text-white py-4 px-4">
               <div className="d-flex align-items-center gap-3 flex-wrap">
                  <img
-                  src={`http://localhost:5000/uploads/teacher/${teacherdata.profileImage}`}
+                  src={`https://school-management-backend-ochre.vercel.app/uploads/teacher/${teacherdata.profileImage}`}
                   alt=""
                   className="rounded-circle border border-3 border-white"
                   style={{ width: "80px", height: "80px", objectFit: "cover" }}

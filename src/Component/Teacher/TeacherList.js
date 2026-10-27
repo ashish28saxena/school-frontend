@@ -13,7 +13,7 @@ const TeacherList=()=>{
   };
 
   const removeTeacher = async(item) => {
-        let response=await fetch("http://localhost:5000/api/teacher/delete/"+item._id,{
+        let response=await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/delete/"+item._id,{
              method: "DELETE"
         })
         const result = await response.json();
@@ -25,7 +25,7 @@ const TeacherList=()=>{
 
   async function getTeacherData()
   {
-      const response = await fetch("http://localhost:5000/api/teacher/");
+      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/");
         const result = await response.json();
         console.log("%%%%%",result.data)
         setTeacherData(result.data || []);
@@ -110,7 +110,7 @@ const TeacherList=()=>{
                   <td>{s.email}</td>
                   <td>{s.employeeID}</td>
                   <img
-    src={`http://localhost:5000/uploads/teacher/${s.profileImage}`}
+    src={`https://school-management-backend-ochre.vercel.app/uploads/teacher/${s.profileImage}`}
     alt="Profile"
     width="50"
     height="50"

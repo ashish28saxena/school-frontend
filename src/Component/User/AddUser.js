@@ -13,14 +13,14 @@ const AddUser=()=>{
     const [status,setStatus]=useState('');
     function getRoleData()
     {
-       fetch("http://localhost:5000/api/role")
+       fetch("https://school-management-backend-ochre.vercel.app/api/role")
        .then((responce)=>responce.json())
        .then((reslt)=>setRole(reslt))
     }
 
     function getEditUser() 
     {
-        fetch("http://localhost:5000/api/user/userEdit/"+id)
+        fetch("https://school-management-backend-ochre.vercel.app/api/user/userEdit/"+id)
         .then((responce)=>responce.json())
         .then((result)=>{
             console.log("ashish",result.name)
@@ -36,7 +36,7 @@ const AddUser=()=>{
     {
         if(id)
         {
-                fetch("http://localhost:5000/api/user/userSubmit/"+id,{
+                fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit/"+id,{
             method:"PUT",
             headers:{
                 "Content-type":"application/json"
@@ -53,7 +53,7 @@ const AddUser=()=>{
         .then((responce)=>responce.json())
         .then((result)=>console.log("data"+result.message))
         }else{
-                fetch("http://localhost:5000/api/user/userSubmit",{
+                fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit",{
             method:"POST",
             headers:{
                 "Content-type":"application/json"

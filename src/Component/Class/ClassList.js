@@ -5,7 +5,7 @@ const ClassList=()=>{
     const [searchItem,setSearchItem]=useState('');
     function getdata()
     {
-        fetch("http://localhost:5000/api/class/")
+        fetch("https://school-management-backend-ochre.vercel.app/api/class/")
         .then((responce)=>responce.json())
         .then((result)=>setClassData(result))
     }
@@ -16,7 +16,7 @@ const ClassList=()=>{
     }
     function deleteClass(item)
     {
-         fetch("http://localhost:5000/api/class/delete/"+item._id,{
+         fetch("https://school-management-backend-ochre.vercel.app/api/class/delete/"+item._id,{
             method:"Delete"
          })
          .then((responce)=>responce.json())
