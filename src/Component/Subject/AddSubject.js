@@ -4,7 +4,7 @@ import "./AddSubject.css";
 
 function AddSubject() {
   const { id } = useParams();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("testttt");
   const [form, setForm] = useState({
   name: "",
   code: "",
@@ -197,6 +197,11 @@ async function getEditSubject() {
              {id ? "Update Subject" : "Save Subject"}
             
           </button>
+               {message && (
+    <div className="success-message">
+      ✓ {message}
+    </div>
+  )}
         </div>
       </form>
     </div>
