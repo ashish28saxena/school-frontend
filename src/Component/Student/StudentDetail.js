@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./StudentDetails.css";
 const StudentDetail=()=>{
     const [data,setData]=useState([])
     const {id}=useParams();
-    async function getdata()
-    {
-        fetch("https://school-management-backend-ochre.vercel.app/api/student/view/"+id)
-        .then((responce)=>responce.json())
-        .then((result)=>setData(result))
-    }
+    async function getdata() {
+    fetch("http://localhost:5000/api/student/view/" + id)
+        .then((response) => response.json())
+        .then((result) => {
+            setData({
+                ...result,
+                class_name: result.className?.className || "",
+                section_name: result.sectionName?.sectionName || ""
+            });
+        })
+        .catch((error) => console.error("Error fetching student:", error));
+}
     useEffect(()=>{
            getdata();
     },[])
@@ -30,9 +37,8 @@ const StudentDetail=()=>{
             </div>
 
             <div>
-                <button class="btn btn-outline-secondary me-2">
-                    ← Back
-                </button>
+                <Link to="/Student-List" class="btn btn-outline-secondary me-2">← Back</Link>
+                
 
                 <button class="btn btn-primary">
                     Edit Student
@@ -52,7 +58,7 @@ const StudentDetail=()=>{
                     <div class="col-md-2 text-center">
 
                         <img
-                            src={`https://school-management-backend-ochre.vercel.app/uploads/${data.StudentPhoto}`}
+                            src={`${data.StudentPhoto}`}
                             class="student-photo"
                             alt="Student Photo"/>
 
@@ -69,7 +75,7 @@ const StudentDetail=()=>{
                         </div>
 
                         <div class="student-info">
-                            Class: {data.className} &nbsp; | &nbsp; Section: A
+                            Class: {data.class_name} &nbsp; | &nbsp; Section: A
                         </div>
 
                         <div class="student-info">
@@ -192,12 +198,12 @@ const StudentDetail=()=>{
 
                 <div class="col-md-3">
                     <div class="detail-label">Class</div>
-                    <div class="detail-value">{data.className}</div>
+                    <div class="detail-value">{data.class_name}</div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="detail-label">Section</div>
-                    <div class="detail-value">-</div>
+                    <div class="detail-value">{data.section_name}</div>
                 </div>
 
                 <div class="col-md-3">

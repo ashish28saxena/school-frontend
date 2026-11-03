@@ -1,9 +1,7 @@
-
-
-import React, { useState } from "react";
-
+import React, { useState,useEffect } from "react";
+import { useParams } from "react-router-dom";
 function AddTeacher() {
-
+const { id } = useParams();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -45,42 +43,75 @@ function AddTeacher() {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const formData = new FormData();
+  try {
+    const formData = new FormData();
 
-  formData.append("firstName", form.firstName);
-  formData.append("lastName", form.lastName);
-  formData.append("gender", form.gender);
-  formData.append("dateOfBirth", form.dateOfBirth);
-  formData.append("mobileNumber", form.mobileNumber);
-  formData.append("email", form.email);
-  formData.append("employeeID", form.employeeID);
-  formData.append("qualification", form.qualification);
-  formData.append("experience", form.experience);
-  formData.append("joiningDate", form.joiningDate);
-  formData.append("department", form.department);
-  formData.append("employmentType", form.employmentType);
-  formData.append("address", form.address);
-  formData.append("city", form.city);
-  formData.append("state", form.state);
-  formData.append("PINCode", form.PINCode);
-  formData.append("status", form.status);
-  formData.append("password", form.password);
+    formData.append("firstName", form.firstName);
+    formData.append("lastName", form.lastName);
+    formData.append("gender", form.gender);
+    formData.append("dateOfBirth", form.dateOfBirth);
+    formData.append("mobileNumber", form.mobileNumber);
 
-  if (form.profileImage) {
-    formData.append("profileImage", form.profileImage);
-  }
-
-  const response = await fetch(
-    "https://school-management-backend-ochre.vercel.app/api/teacher/submit",
-    {
-      method: "POST",
-      body: formData
+    // Email only during Submit
+    if (!id) {
+      formData.append("email", form.email);
+      formData.append("password", form.password);
     }
-  );
 
-  const result = await response.json();
-  setMessage(result.message)
-  //console.log(result);
+    formData.append("employeeID", form.employeeID);
+    formData.append("qualification", form.qualification);
+    formData.append("experience", form.experience);
+    formData.append("joiningDate", form.joiningDate);
+    formData.append("department", form.department);
+    formData.append("employmentType", form.employmentType);
+    formData.append("address", form.address);
+    formData.append("city", form.city);
+    formData.append("state", form.state);
+    formData.append("PINCode", form.PINCode);
+    formData.append("status", form.status);
+
+    // Image only if new image selected
+    if (form.profileImage instanceof File) {
+      formData.append("profileImage", form.profileImage);
+    }
+
+    let response;
+
+    if (id) {
+      // Update Teacher
+      response = await fetch(
+        `http://localhost:5000/api/teacher/update/${id}`,
+        {
+          method: "PUT",
+          body: formData
+        }
+      );
+    } else {
+      // Submit Teacher
+      response = await fetch(
+        "http://localhost:5000/api/teacher/submit",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+    }
+
+    const result = await response.json();
+
+    setMessage(result.message);
+
+    if (!response.ok) {
+      console.log("Error:", result);
+      return;
+    }
+
+    console.log("Success:", result);
+
+  } catch (error) {
+    console.log("Submit Error:", error);
+    setMessage("Something went wrong");
+  }
 };
 
   const handleReset = () => {
@@ -106,15 +137,50 @@ function AddTeacher() {
       password:""
     });
   };
-
   
+   async function editData()
+   {
+        const response = await fetch("http://localhost:5000/api/teacher/edit/"+id);
+        if (!response.ok) throw new Error("Failed to fetch teacher data");
+        const result = await response.json();
+        const t = result.data;
+        setForm({
+      firstName: t.firstName,
+      lastName: t.lastName,
+      gender: t.gender,
+      dateOfBirth: t.dateOfBirth?.split("T")[0], // <input type="date"> needs yyyy-MM-dd
+      mobileNumber: t.mobileNumber,
+      email: t.email,
+      employeeId: t.employeeId,
+      qualification: t.qualification,
+      experience: t.experience,
+      joiningDate: t.joiningDate?.split("T")[0],
+      department: t.department,
+      employmentType: t.employmentType,
+      address: t.address,
+      city: t.city,
+      state: t.state,
+      PINCode: t.PINCode,
+      status: t.status,
+    });
+        
+
+        
+   }
+  useEffect(()=>{
+  if(id)
+    {
+       editData();
+    }          
+  
+  },[id])
 
   return (
     <div className="container mt-4">
 
       <div className="card shadow-sm">
 
-        {/* Header */}
+       
         {message && (
     <div className="success-message">
       ✓ {message}
@@ -248,7 +314,7 @@ function AddTeacher() {
                   onChange={handleChange}
                   className="form-control"
                   placeholder="Enter Password"
-                  required
+                  required={!id}
                 />
               </div>
 
@@ -514,7 +580,11 @@ function AddTeacher() {
               >
                 Reset
               </button>
-
+    {message && (
+    <div className="success-message">
+      ✓ {message}
+    </div>
+  )}
             </div>
 
           </form>

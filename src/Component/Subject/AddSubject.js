@@ -4,7 +4,7 @@ import "./AddSubject.css";
 
 function AddSubject() {
   const { id } = useParams();
-  const [message, setMessage] = useState("testttt");
+  const [message, setMessage] = useState("");
   const [form, setForm] = useState({
   name: "",
   code: "",
@@ -28,7 +28,7 @@ function AddSubject() {
     console.log("Subject saved:", form);
     if(id)
     {
-      await fetch("https://school-management-backend-ochre.vercel.app/api/subject/update/"+id,{
+      await fetch("http://localhost:5000/api/subject/update/"+id,{
          method: "PUT",
          headers: {
         "Content-Type": "application/json"
@@ -40,7 +40,7 @@ function AddSubject() {
       setMessage(response1.message || "Something went wrong!");
     })
     }else{
-        await fetch("https://school-management-backend-ochre.vercel.app/api/subject/submit",{
+        await fetch("http://localhost:5000/api/subject/submit",{
          method: "POST",
          headers: {
         "Content-Type": "application/json"
@@ -58,7 +58,7 @@ function AddSubject() {
   };
 
   async function getClassdata() {
-    await fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+    await fetch("http://localhost:5000/api/class/")
         .then((response) => response.json())
         .then((result) => setClassData(result))
         .catch((error) => console.log(error));
@@ -69,7 +69,7 @@ async function getEditSubject() {
     if (!id) return;
 
     const response = await fetch(
-      `https://school-management-backend-ochre.vercel.app/api/subject/edit/${id}`
+      `http://localhost:5000/api/subject/edit/${id}`
     );
 
     const result = await response.json();
@@ -197,11 +197,7 @@ async function getEditSubject() {
              {id ? "Update Subject" : "Save Subject"}
             
           </button>
-               {message && (
-    <div className="success-message">
-      ✓ {message}
-    </div>
-  )}
+          
         </div>
       </form>
     </div>

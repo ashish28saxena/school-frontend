@@ -68,44 +68,9 @@ function Header() {
 
           <ul className="sm-nav navbar-nav ms-3">
 
-            {/* ================= MASTER ================= */}
-            <li className="nav-item dropdown">
-              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-                Master
-              </Link>
+            
 
-              <ul className="sm-dropdown dropdown-menu">
-                <li className="submenu">
-                  <Link to="#" className="sm-dropdown-item dropdown-toggle">
-                    Class
-                  </Link>
-                  <ul className="sm-dropdown dropdown-menu">
-                    <li>
-                      <Link to="/Class-List" className="sm-dropdown-item">Class List</Link>
-                    </li>
-                    <li>
-                      <Link to="/Add-Class" className="sm-dropdown-item">Add Class</Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
 
-            {/* ================= STUDENT ================= */}
-            <li className="nav-item dropdown">
-              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-                Student
-              </Link>
-
-              <ul className="sm-dropdown dropdown-menu">
-                <li>
-                  <Link to="/Add-Student" className="sm-dropdown-item">Student Registration</Link>
-                </li>
-                <li>
-                  <Link to="/Student-List" className="sm-dropdown-item">Student List</Link>
-                </li>
-              </ul>
-            </li>
 
             {/* ================= ATTENDANCE ================= */}
             <li className="nav-item dropdown">
@@ -123,13 +88,19 @@ function Header() {
               </ul>
             </li>
 
-            {/* ================= Teacher Management ================= */}
+            {/* =================Student Teacher Management ================= */}
             <li className="nav-item dropdown">
               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-                Teacher Management
+                Student / Teacher Management
               </Link>
 
               <ul className="sm-dropdown dropdown-menu">
+                <li>
+                  <Link to="/Add-Student" className="sm-dropdown-item">Student Registration</Link>
+                </li>
+                <li>
+                  <Link to="/Student-List" className="sm-dropdown-item">Student List</Link>
+                </li>
                 <li>
                   <Link to="/Add-Teacher" className="sm-dropdown-item">Add Teacher</Link>
                 </li>
@@ -137,9 +108,7 @@ function Header() {
                   <Link to="/Teacher-List" className="sm-dropdown-item">Teacher List</Link>
                 </li>
                 
-                <li>
-                  <Link to="/Teacher-Profile/1" className="sm-dropdown-item">Teacher Profile</Link>
-                </li>
+                
                 <li>
                   <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subject</Link>
                 </li>

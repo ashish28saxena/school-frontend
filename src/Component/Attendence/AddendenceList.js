@@ -11,7 +11,7 @@ const AddendenceList = () => {
     const [presentStudent, setPresentStudent] = useState(0)
     const [absentStudent, setAbsentStudent] = useState(0)
     function getclassNamedata() {
-        fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+        fetch("http://localhost:5000/api/class/")
             .then((responce) => responce.json())
             .then((result) => setclassNameData(result))
     }
@@ -20,7 +20,7 @@ const AddendenceList = () => {
 
     async function searchData() {
         await fetch(
-            `https://school-management-backend-ochre.vercel.app/api/attendence/get/${classAttendence}/${attenddencedate}`
+            `http://localhost:5000/api/attendence/get/${classAttendence}/${attenddencedate}`
         )
             .then((response) => response.json())
             .then((result) => {

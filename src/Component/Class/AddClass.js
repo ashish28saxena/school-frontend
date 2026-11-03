@@ -8,7 +8,7 @@ const AddClass=()=>{
     {
           if(id)
            {
-              fetch("https://school-management-backend-ochre.vercel.app/api/class/update/"+id,{
+              fetch("http://localhost:5000/api/class/update/"+id,{
                 method:"PUT",
                 headers:{
                    "Content-Type":"application/json",
@@ -23,7 +23,7 @@ const AddClass=()=>{
               .then((result)=>console.log(result))
 
            }else{
-                fetch("https://school-management-backend-ochre.vercel.app/api/class/submit",{
+                fetch("http://localhost:5000/api/class/submit",{
                 method:"POST",
                 headers:{
                    "Content-Type":"application/json",
@@ -41,7 +41,7 @@ const AddClass=()=>{
 
     function getEditClassData()
     {
-           fetch("https://school-management-backend-ochre.vercel.app/api/class/edit/"+id)
+           fetch("http://localhost:5000/api/class/edit/"+id)
            .then((responce)=>responce.json())
            .then((result)=>{
             setClassName(result.className);

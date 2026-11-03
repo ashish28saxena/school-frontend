@@ -1,149 +1,180 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./TeacherList.css";
 
-const TeacherList=()=>{
-     const [teacherData, setTeacherData] = useState([]);
+const API = "http://localhost:5000";
+
+const TeacherList = () => {
+  const [teacherData, setTeacherData] = useState([]);
   const [search, setSearch] = useState("");
-  const [typeFilter, setTypeFilter] = useState("All");
-   const toggleStatus = (id) => {
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  async function getTeacherData() {
+    const response = await fetch(`${API}/api/teacher/`);
+    const result = await response.json();
+    setTeacherData(result.data || []);
+  }
+
+  useEffect(() => {
+    getTeacherData();
+  }, []);
+
+  const toggleStatus = (id) => {
     setTeacherData((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, status: !s.status } : s))
+      prev.map((t) => (t._id === id ? { ...t, status: !t.status } : t))
     );
   };
 
-  const removeTeacher = async(item) => {
-        let response=await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/delete/"+item._id,{
-             method: "DELETE"
-        })
-        const result = await response.json();
-        if(result)
-        {
-            getTeacherData();
-        }
+  const removeTeacher = async (item) => {
+    if (!window.confirm(`Delete ${item.firstName}? This can't be undone.`)) return;
+    const response = await fetch(`${API}/api/teacher/delete/${item._id}`, {
+      method: "DELETE",
+    });
+    const result = await response.json();
+    if (result) getTeacherData();
   };
 
-  async function getTeacherData()
-  {
-      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/");
-        const result = await response.json();
-        console.log("%%%%%",result.data)
-        setTeacherData(result.data || []);
+  const query = search.trim().toLowerCase();
+  const filtered = teacherData.filter((t) => {
+    const matchesSearch =
+      !query ||
+      [t.firstName, t.email, t.employeeID, t.mobileNumber]
+        .filter(Boolean)
+        .some((v) => String(v).toLowerCase().includes(query));
+    const matchesStatus =
+      statusFilter === "All" ||
+      (statusFilter === "Active" ? t.status : !t.status);
+    return matchesSearch && matchesStatus;
+  });
 
-  }
+  const formatDate = (d) =>
+    d
+      ? new Date(d).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })
+      : "—";
 
-  useEffect(()=>{
-       getTeacherData()
-  },[])
-    return(
-         <div className="subl-wrap">
-      <div className="subl-card">
-
-        <div className="subl-header">
+  return (
+    <div className="tl-page">
+      <div className="tl-card">
+        <header className="tl-header">
           <div>
-            <h2>Teacher List</h2>
-            <p>{teacherData.length} of {teacherData.length} Teacher</p>
+            <h2 className="tl-title">Teachers</h2>
+            <p className="tl-sub">
+              Showing {filtered.length} of {teacherData.length} teachers
+            </p>
           </div>
-          <Link className="subl-add-btn" to="/Add-Teacher">+ Add Teacher</Link>
-          
-        </div>
+          <Link className="tl-btn tl-btn--primary" to="/Add-Teacher">
+            + Add teacher
+          </Link>
+        </header>
 
-        <div className="subl-toolbar">
+        <div className="tl-toolbar">
           <input
             type="text"
-            className="subl-search"
-            placeholder="Search by name or code..."
+            className="tl-input"
+            placeholder="Search by name, email or employee ID"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <select
-            className="subl-filter"
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
+            className="tl-input tl-select"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="All">All Types</option>
-            <option value="Core">Core</option>
-            <option value="Elective">Elective</option>
-            <option value="Extra-curricular">Extra-curricular</option>
+            <option value="All">All statuses</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
           </select>
         </div>
 
-        <div className="subl-table-scroll">
-          <table className="subl-table">
+        <div className="tl-scroll">
+          <table className="tl-table">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Teacher</th>
                 <th>Gender</th>
-                <th>Date Of Birth</th>
-                <th>Number</th>
-                <th>Email</th>
+                <th>Date of birth</th>
+                <th>Contact</th>
                 <th>Employee ID</th>
-                <th>Photo</th>
                 <th>Status</th>
-                <th className="subl-actions-col">Actions</th>
+                <th className="tl-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {teacherData.length === 0 && (
+              {filtered.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="subl-empty">
-                    No Teacher match your search.
+                  <td colSpan="7" className="tl-empty">
+                    No teachers found. Try a different search or add a new teacher.
                   </td>
                 </tr>
               )}
 
-              {teacherData.map((s,index) => (
-                <tr key={index}>
-                  <td className="subl-name">{s.firstName}</td>
-                  <td className="subl-code">{s.gender}</td>
+              {filtered.map((t) => (
+                <tr key={t._id}>
                   <td>
-                    <span className="subl-code">
-                      
-                     {new Date(s.dateOfBirth).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  })}
-                    </span>
+                    <div className="tl-person">
+                      {t.profileImage ? (
+                        <img
+                          className="tl-avatar"
+                          src={`${API}/uploads/teacher/${t.profileImage}`}
+                          alt={t.firstName}
+                        />
+                      ) : (
+                        <span className="tl-avatar tl-avatar--fallback">
+                          {(t.firstName || "?").charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                      <span className="tl-name">{t.firstName}</span>
+                    </div>
                   </td>
-                  <td>{s.mobileNumber}</td>
-                  <td>{s.email}</td>
-                  <td>{s.employeeID}</td>
-                  <img
-    src={`https://school-management-backend-ochre.vercel.app/uploads/teacher/${s.profileImage}`}
-    alt="Profile"
-    width="50"
-    height="50"
-  />
+                  <td>{t.gender}</td>
+                  <td>{formatDate(t.dateOfBirth)}</td>
+                  <td>
+                    <div className="tl-contact">
+                      <span>{t.email}</span>
+                      <span className="tl-muted">{t.mobileNumber}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span className="tl-id">{t.employeeID}</span>
+                  </td>
                   <td>
                     <button
-                      className={`subl-status ${s.status ? "is-active" : "is-inactive"}`}
-                      onClick={() => toggleStatus(s.id)}
+                      className={`tl-status ${t.status ? "is-active" : "is-inactive"}`}
+                      onClick={() => toggleStatus(t._id)}
+                      title="Click to change status"
                     >
-                      <span className="subl-status-dot"></span>
-                      {s.status ? "Active" : "Inactive"}
+                      <span className="tl-dot" />
+                      {t.status ? "Active" : "Inactive"}
                     </button>
                   </td>
-                  <td className="subl-actions-col">
-                    <button><Link to={"/Teacher-Profile/"+s._id}>View</Link></button>
-                    <button className="subl-icon-btn" title="Edit">Edit</button>
-                    <button
-                      className="subl-icon-btn subl-icon-btn--danger"
-                      title="Delete"
-                      onClick={() => removeTeacher(s)}
-                    >
-                      Delete
-                    </button>
+                  <td>
+                    <div className="tl-actions">
+                      <Link className="tl-btn" to={"/Teacher-Profile/" + t._id}>
+                        View
+                      </Link>
+                      <Link className="tl-btn" to={"/Add-Teacher/" + t._id}>
+                        Edit
+                      </Link>
+                      <button
+                        className="tl-btn tl-btn--danger"
+                        onClick={() => removeTeacher(t)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
-    )
-}
+  );
+};
 
 export default TeacherList;
