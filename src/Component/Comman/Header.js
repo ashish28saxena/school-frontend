@@ -113,6 +113,10 @@ function Header() {
                   <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subject</Link>
                 </li>
                 <li>
+                  <Link to="/Assign-Subject-List" className="sm-dropdown-item">Assign Subject List</Link>
+                </li>
+                
+                <li>
                   <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class</Link>
                 </li>
                 <li>

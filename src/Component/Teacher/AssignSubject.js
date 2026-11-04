@@ -1,5 +1,6 @@
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+const API = "http://localhost:5000";
 
 function AssignSubject() {
 
@@ -10,6 +11,14 @@ function AssignSubject() {
     subjectId: "",
     status: true
   });
+  const [message, setMessage] = useState("");
+    const [teacherData, setTeacherData] = useState([]);
+  const [classData, setClassData] = useState([]);
+  const [sectionData, setSectionData] = useState([]);
+    const [subjectData, setSubjectData] = useState([]);
+ 
+  
+  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -18,15 +27,59 @@ function AssignSubject() {
       ...form,
       [name]: type === "checkbox" ? checked : value
     });
+
+
+    
+    console.log("@@@@@@@@@@@",form)
+   
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    console.log("Assignment Data:", form);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // API call yahan karenge
-  };
+  try {
+    const payload = {
+      teacherID: form.teacherId,
+      classId: form.classId,
+      sectionId: form.sectionId,
+      subjectId: form.subjectId,
+      status: form.status
+    };
+
+    console.log("Submit Data:", payload);
+
+    const response = await fetch(
+      "http://localhost:5000/api/assignsubject/submit",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const result = await response.json();
+
+    console.log("API Response:", result);
+
+    if (response.ok) {
+      setMessage(result.message);
+    } else {
+      setMessage(
+        typeof result.message === "string"
+          ? result.message
+          : "Something went wrong"
+      );
+    }
+
+  } catch (error) {
+    console.error("Submit Error:", error);
+    setMessage("Something went wrong!");
+  }
+};
+
 
   const handleReset = () => {
     setForm({
@@ -38,6 +91,37 @@ function AssignSubject() {
     });
   };
 
+  async function getTeacher() {
+         const response = await fetch(`${API}/api/teacher/`);
+         const result = await response.json();
+         setTeacherData(result.data || []);
+  }
+
+   async function getClassData() {
+         const response = await fetch(`${API}/api/class/`);
+         const result = await response.json();
+         setClassData(result || []);
+  }
+
+  async function getSectionData() {
+         const response = await fetch(`${API}/api/section/`);
+         const result = await response.json();
+         setSectionData(result.data || []); 
+  }
+
+   async function getSubjectData(classId) {
+         const response = await fetch(`${API}/api/subject/`+classId);
+         const result = await response.json();
+         setSubjectData(result.data || []); 
+  }
+
+  useEffect(()=>{ 
+         getTeacher();
+         getClassData();
+         getSectionData();
+         //getSubjectData();
+  },[])
+
   return (
     <div className="container mt-4">
 
@@ -46,7 +130,11 @@ function AssignSubject() {
         <div className="card-header bg-primary text-white">
           <h4 className="mb-0">Assign Subject to Teacher</h4>
         </div>
-
+        {message && (
+    <div className="success-message">
+      ✓ {message}
+    </div>
+  )}
         <div className="card-body">
 
           <form onSubmit={handleSubmit}>
@@ -67,15 +155,16 @@ function AssignSubject() {
                   required
                 >
                   <option value="">Select Teacher</option>
-                  <option value="teacher1">
-                    Rahul Sharma
+                  {
+                    teacherData.map((item)=>{
+                        return(
+                           <option value={item._id} >
+                    {item.firstName}   {item.lastName}
                   </option>
-                  <option value="teacher2">
-                    Amit Kumar
-                  </option>
-                  <option value="teacher3">
-                    Priya Singh
-                  </option>
+                        )
+                    })
+                  }
+                 
                 </select>
               </div>
 
@@ -88,17 +177,23 @@ function AssignSubject() {
                 <select
                   name="classId"
                   value={form.classId}
-                  onChange={handleChange}
+                 onChange={(e) => {
+                      handleChange(e);
+                      getSubjectData(e.target.value);
+                  }}
                   className="form-select"
                   required
                 >
                   <option value="">Select Class</option>
-                  <option value="class1">Class 1</option>
-                  <option value="class2">Class 2</option>
-                  <option value="class3">Class 3</option>
-                  <option value="class4">Class 4</option>
-                  <option value="class5">Class 5</option>
-                  <option value="class10">Class 10</option>
+                  {
+                    classData.map((item)=>{
+                          return(
+                            <option value={item._id}>Class {item.className}</option>
+                          )
+                    })
+                  }
+                  
+                  
                 </select>
               </div>
 
@@ -116,9 +211,15 @@ function AssignSubject() {
                   required
                 >
                   <option value="">Select Section</option>
-                  <option value="sectionA">A</option>
-                  <option value="sectionB">B</option>
-                  <option value="sectionC">C</option>
+                  {
+                    sectionData.map((item)=>{
+                        return(
+                          <option value={item._id}>{item.sectionName}</option>
+                        )
+                    })
+                  }
+                  
+                  
                 </select>
               </div>
 
@@ -136,21 +237,15 @@ function AssignSubject() {
                   required
                 >
                   <option value="">Select Subject</option>
-                  <option value="subject1">
-                    Mathematics
-                  </option>
-                  <option value="subject2">
-                    English
-                  </option>
-                  <option value="subject3">
-                    Science
-                  </option>
-                  <option value="subject4">
-                    Hindi
-                  </option>
-                  <option value="subject5">
-                    Computer
-                  </option>
+                  {
+                    subjectData.map((item)=>{
+                        return(
+                          <option value={item._id}>{item.name} </option>
+                        )
+                    })
+                  }
+                  
+                  
                 </select>
               </div>
 

@@ -32,6 +32,7 @@ import AddSubject from './Component/Subject/AddSubject';
 import SubjectList from './Component/Subject/SubjectList';
 import AssignSubjectTeacher from "./Component/Subject/AssignSubjectTeacher";
 import TeacherList from "./Component/Teacher/TeacherList";
+import AssignSubjectList from "./Component/Teacher/AssignSubjectList";
 
 
 function App() {
@@ -78,6 +79,9 @@ function App() {
                                   <Route path="/Add-Teacher" element={<AddTeacher />} />
                                    <Route path="/Teacher-Profile/:id" element={<Profile />} />
                                    <Route path="/Assign-Subject" element={<AssignSubject />} />
+                                   <Route path="/Assign-Subject-List" element={<AssignSubjectList />} />
+
+                                   
                                    <Route path="/Assign-Class-Teacher" element={<AssignClassTeacher />} />
                                    <Route path="/Teacher-Salary" element={<Salary />} />
                                    <Route path="/Assign-Class" element={<AssignClass />} />
@@ -88,6 +92,7 @@ function App() {
                                    <Route path="/Assign-Subject-Teacher" element={<AssignSubjectTeacher />} />
                                    <Route path="/Teacher-List" element={<TeacherList />} />
                                    <Route path="/Add-Teacher/:id" element={<AddTeacher />} />
+                                   <Route path="/Edit-Assign-Subject/:id" element={<AssignSubject />} />
                                   
                                    
                                    
