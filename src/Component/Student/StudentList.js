@@ -31,7 +31,7 @@ const StudentList = () => {
   const [total, setTotal] = useState(0);
 
   async function deleteStudent(id) {
-    await fetch("http://localhost:5000/api/student/delete/" + id, {
+    await fetch("https://school-management-backend-ochre.vercel.app/api/student/delete/" + id, {
       method: "DELETE",
     })
       .then((response) => response.json())
@@ -50,7 +50,7 @@ const StudentList = () => {
   }
 
   function getData() {
-    fetch(`http://localhost:5000/api/student?offset=${offset}&limit=${limit}`)
+    fetch(`https://school-management-backend-ochre.vercel.app/api/student?offset=${offset}&limit=${limit}`)
       .then((response) => response.json())
       .then((result) => {
         setData(result.data);

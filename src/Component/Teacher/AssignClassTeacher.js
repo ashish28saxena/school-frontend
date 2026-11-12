@@ -1,19 +1,8 @@
-// import react from "react";
-// const AssignClassTeacher=()=>{
-//     return(
-//         <div>
-//             <h1>hello this is AssignClassTeacher</h1>
-//         </div>
-//     )
-// }
-
-// export default AssignClassTeacher;
-
-
-import React, { useState } from "react";
-
+import React, { useState,useEffect }  from "react";
+import { useParams } from "react-router-dom";
+const API = "https://school-management-backend-ochre.vercel.app";
 function AssignClassTeacher() {
-
+const { id } = useParams(); 
   const [form, setForm] = useState({
     teacherId: "",
     classId: "",
@@ -21,6 +10,10 @@ function AssignClassTeacher() {
     academicYear: "2026-27",
     status: true
   });
+    const [message, setMessage] = useState("");
+    const [teacherData, setTeacherData] = useState([]);
+  const [classData, setClassData] = useState([]);
+  const [sectionData, setSectionData] = useState([]);
 
   const handleChange = (e) => {
 
@@ -33,15 +26,50 @@ function AssignClassTeacher() {
 
   };
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  try {
+    const payload = {
+      teacherID: form.teacherId,
+      classId: form.classId,
+      sectionId: form.sectionId,
+      academicYear: form.academicYear,
+      status: form.status
+    };
 
-    console.log("Assign Class Data:", form);
+    // ID hai to Update, nahi hai to Submit
+    const url = id
+      ? `https://school-management-backend-ochre.vercel.app/api/assignclass/update/${id}`
+      : "https://school-management-backend-ochre.vercel.app/api/assignclass/submit";
 
-    // API call yahan karenge
+    const response = await fetch(url, {
+      method: id ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
 
-  };
+    const result = await response.json();
+
+    if (response.ok) {
+      setMessage(result.message);
+
+      
+    } else {
+      setMessage(
+        typeof result.message === "string"
+          ? result.message
+          : "Something went wrong"
+      );
+    }
+
+  } catch (error) {
+    console.error("Submit Error:", error);
+    setMessage("Something went wrong!");
+  }
+};
 
   const handleReset = () => {
 
@@ -55,12 +83,61 @@ function AssignClassTeacher() {
 
   };
 
+  async function getTeacher() {
+         const response = await fetch(`${API}/api/teacher/`);
+         const result = await response.json();
+         setTeacherData(result.data || []);
+  }
+
+   async function getClassData() {
+         const response = await fetch(`${API}/api/class/`);
+         const result = await response.json();
+         setClassData(result || []);
+  }
+
+  async function getSectionData() {
+         const response = await fetch(`${API}/api/section/`);
+         const result = await response.json();
+         setSectionData(result.data || []); 
+  }
+
+    async function editAssignClassData(updateid) {
+         const response = await fetch(`${API}/api/assignclass/edit/`+updateid);
+         const result = await response.json();
+         let result1=result.data || []; 
+         
+         
+         setForm({
+          teacherId: result1.teacherID,
+          classId: result1.classId,
+          sectionId: result1.sectionId,
+          academicYear: result1.academicYear,
+          status: result1.status
+  });
+         
+  }
+
+   useEffect(()=>{ 
+         getTeacher();
+         getClassData();
+         getSectionData();
+       
+         if(id)
+         {
+           editAssignClassData(id);
+         }
+  },[])
+
   return (
 
     <div className="container mt-4">
 
       <div className="card shadow-sm">
-
+             {message && (
+    <div className="success-message">
+      ✓ {message}
+    </div>
+  )}
         <div className="card-header bg-primary text-white">
           <h4 className="mb-0">
             Assign Class to Teacher
@@ -93,17 +170,16 @@ function AssignClassTeacher() {
                     Select Teacher
                   </option>
 
-                  <option value="teacher1">
-                    Rahul Sharma
+                  {
+                    teacherData.map((item)=>{
+                        return(
+                           <option value={item._id} >
+                    {item.firstName}   {item.lastName}
                   </option>
-
-                  <option value="teacher2">
-                    Amit Kumar
-                  </option>
-
-                  <option value="teacher3">
-                    Priya Singh
-                  </option>
+                        )
+                    })
+                  }
+                 
 
                 </select>
 
@@ -130,16 +206,13 @@ function AssignClassTeacher() {
                     Select Class
                   </option>
 
-                  <option value="class1">Class 1</option>
-                  <option value="class2">Class 2</option>
-                  <option value="class3">Class 3</option>
-                  <option value="class4">Class 4</option>
-                  <option value="class5">Class 5</option>
-                  <option value="class6">Class 6</option>
-                  <option value="class7">Class 7</option>
-                  <option value="class8">Class 8</option>
-                  <option value="class9">Class 9</option>
-                  <option value="class10">Class 10</option>
+                  {
+                    classData.map((item)=>{
+                          return(
+                            <option value={item._id}>Class {item.className}</option>
+                          )
+                    })
+                  }
 
                 </select>
 
@@ -166,9 +239,13 @@ function AssignClassTeacher() {
                     Select Section
                   </option>
 
-                  <option value="sectionA">A</option>
-                  <option value="sectionB">B</option>
-                  <option value="sectionC">C</option>
+                  {
+                    sectionData.map((item)=>{
+                        return(
+                          <option value={item._id}>{item.sectionName}</option>
+                        )
+                    })
+                  }
 
                 </select>
 
@@ -190,13 +267,17 @@ function AssignClassTeacher() {
                   className="form-select"
                 >
 
-                  <option value="2026-27">
-                    2026-27
-                  </option>
+                 {Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, index) => {
+                  const startYear = 2020 + index;
+                  const endYear = startYear + 1;
+                  const year = `${startYear}-${String(endYear).slice(-2)}`;
 
-                  <option value="2027-28">
-                    2027-28
-                  </option>
+                  return (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  );
+                })}
 
                 </select>
 

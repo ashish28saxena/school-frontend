@@ -7,7 +7,7 @@ const RoleList=()=>{
     
     function getData()
     {
-         fetch("http://localhost:5000/api/role")
+         fetch("https://school-management-backend-ochre.vercel.app/api/role")
            .then((result)=>result.json())
          .then((responce)=>setData(responce))
          console.log("***"+data)
@@ -16,7 +16,7 @@ const RoleList=()=>{
 
     function deleteRole(index)
     {
-        let result=fetch("http://localhost:5000/api/role/delete/"+index,{
+        let result=fetch("https://school-management-backend-ochre.vercel.app/api/role/delete/"+index,{
         method: "DELETE"
       })
 
@@ -27,7 +27,7 @@ const RoleList=()=>{
 
     function filterData()
     {
-         fetch("http://localhost:5000/api/role/search?q="+searchTerm)
+         fetch("https://school-management-backend-ochre.vercel.app/api/role/search?q="+searchTerm)
            .then((result)=>result.json())
          .then((responce)=>setData(responce))
     }

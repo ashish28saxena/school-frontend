@@ -18,7 +18,7 @@ function SubjectList() {
   };
 
   const removeSubject = async(item) => {
-        let response=await fetch("http://localhost:5000/api/subject/delete/"+item._id,{
+        let response=await fetch("https://school-management-backend-ochre.vercel.app/api/subject/delete/"+item._id,{
              method: "DELETE"
         })
         const result = await response.json();
@@ -30,7 +30,7 @@ function SubjectList() {
 
   async function getSubjectData()
   {
-      const response = await fetch("http://localhost:5000/api/subject");
+      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject");
         const result = await response.json();
 
         setSubjects(result.data || []);

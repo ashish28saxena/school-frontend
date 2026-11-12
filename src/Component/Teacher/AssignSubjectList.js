@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 
-const API = "http://localhost:5000";
+const API = "https://school-management-backend-ochre.vercel.app";
 
 const emptyFilters = {
   search: "",

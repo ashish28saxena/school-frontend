@@ -1,42 +1,3 @@
-// import React from "react";
-// import {  Link } from "react-router-dom";
-// const Header=()=>{
-//     return (
-//         <div>
-//             <nav className="navbar navbar-expand-lg bg-body-tertiary">
-//                 <div className="container-fluid">
-                    
-//                     <img src={process.env.PUBLIC_URL + "/images.jpg"} width={50}></img>
-//                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-//                         <span className="navbar-toggler-icon"></span>
-//                     </button>
-//                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-//                         <div className="navbar-nav">
-//                             <Link to="/" className="nav-link">Home</Link>
-//                             <Link to="/user" className="nav-link">User List</Link>
-//                             <Link to="/todo" className="nav-link">Todo List</Link>
-//                             <Link to="/quotesList" className="nav-link">Quotes List</Link>
-//                             <Link to="/Role" className="nav-link">Role List</Link>
-//                             <Link to="/Class-List" className="nav-link">Class List</Link>
-//                             <Link to="/Student-List" className="nav-link">Student List</Link>
-//                             <Link to="/login" className="nav-link">Login</Link>
-//                             <Link to="/Attenddence-list" className="nav-link">Attendence</Link>
-//                             <Link to="/Attenddence-student-list" className="nav-link">Attendence View</Link>
-                            
-
-                            
-                            
-//                         </div>
-//                     </div>
-//                 </div>
-//             </nav>
-//         </div>
-//     )
-// }
-
-// export default Header
-
-
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
@@ -120,6 +81,10 @@ function Header() {
                   <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class</Link>
                 </li>
                 <li>
+                  <Link to="/Assign-Class-List" className="sm-dropdown-item">Assign Class List</Link>
+                </li>
+                
+                <li>
                   <Link to="/Assign-Class" className="sm-dropdown-item">Assign Section</Link>
                 </li>
                 <li>
@@ -127,6 +92,9 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/Teacher-Salary" className="sm-dropdown-item">Salary Details</Link>
+                </li>
+                <li>
+                  <Link to="/Student-Attendance" className="sm-dropdown-item">Student Attendance</Link>
                 </li>
               </ul>
             </li>
@@ -145,17 +113,15 @@ function Header() {
                   <Link to="/Add-Class" className="sm-dropdown-item">Add Class</Link>
                 </li>
                 <li>
-                  <Link to="/Add-Section" className="sm-dropdown-item">Add Section</Link>
+                  <Link to="/Add-Section" className="sm-dropdown-item">Section</Link>
                 </li>
                 <li>
-                  <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class Teacher</Link>
+                  <Link to="/Class-Teacher" className="sm-dropdown-item">Assign Class Teacher</Link>
                 </li>
                 <li>
                   <Link to="/Assign-Students" className="sm-dropdown-item">Assign Students</Link>
                 </li>
-                <li>
-                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subjects</Link>
-                </li>
+                
               </ul>
             </li>
 
@@ -167,21 +133,12 @@ function Header() {
 
               <ul className="sm-dropdown dropdown-menu">
                 <li>
-                  <Link to="/Add-Subject" className="sm-dropdown-item">Add Subject</Link>
+                    <Link to="/subject-management" className="sm-dropdown-item"> Subject Management</Link>
                 </li>
                 <li>
-                  <Link to="/Subject-List" className="sm-dropdown-item">Subject List</Link>
+                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subjects</Link>
                 </li>
                 
-                <li>
-                  <Link to="/Subject-Code" className="sm-dropdown-item">Subject Code</Link>
-                </li>
-                <li>
-                  <Link to="/Assign-Subject-Teacher" className="sm-dropdown-item">Assign Teacher</Link>
-                </li>
-                <li>
-                  <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Class</Link>
-                </li>
               </ul>
             </li>
 

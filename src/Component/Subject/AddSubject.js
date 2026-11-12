@@ -28,7 +28,7 @@ function AddSubject() {
     console.log("Subject saved:", form);
     if(id)
     {
-      await fetch("http://localhost:5000/api/subject/update/"+id,{
+      await fetch("https://school-management-backend-ochre.vercel.app/api/subject/update/"+id,{
          method: "PUT",
          headers: {
         "Content-Type": "application/json"
@@ -40,7 +40,7 @@ function AddSubject() {
       setMessage(response1.message || "Something went wrong!");
     })
     }else{
-        await fetch("http://localhost:5000/api/subject/submit",{
+        await fetch("https://school-management-backend-ochre.vercel.app/api/subject/submit",{
          method: "POST",
          headers: {
         "Content-Type": "application/json"
@@ -58,7 +58,7 @@ function AddSubject() {
   };
 
   async function getClassdata() {
-    await fetch("http://localhost:5000/api/class/")
+    await fetch("https://school-management-backend-ochre.vercel.app/api/class/")
         .then((response) => response.json())
         .then((result) => setClassData(result))
         .catch((error) => console.log(error));
@@ -69,7 +69,7 @@ async function getEditSubject() {
     if (!id) return;
 
     const response = await fetch(
-      `http://localhost:5000/api/subject/edit/${id}`
+      `https://school-management-backend-ochre.vercel.app/api/subject/edit/${id}`
     );
 
     const result = await response.json();

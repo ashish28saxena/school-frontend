@@ -1,0 +1,122 @@
+
+.student-attendance-page {
+  background: #f7f8fc;
+  min-height: 100vh;
+}
+
+.attendance-summary {
+  padding: 22px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  background: white;
+  border-left: 4px solid;
+}
+
+.attendance-summary p {
+  margin-bottom: 8px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.attendance-summary h3 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.attendance-summary i {
+  font-size: 30px;
+}
+
+.attendance-summary.total {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.attendance-summary.present {
+  border-color: #198754;
+  color: #198754;
+}
+
+.attendance-summary.absent {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.attendance-summary.leave {
+  border-color: #ffc107;
+  color: #d39e00;
+}
+
+.attendance-search {
+  max-width: 260px;
+}
+
+.student-attendance-photo,
+.student-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.student-avatar {
+  background: #e7efff;
+  color: #0d6efd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.attendance-status-btn {
+  border: 1px solid #dee2e6;
+  background: white;
+  color: #495057;
+  min-width: 75px;
+}
+
+.attendance-status-btn.active-present {
+  background: #198754;
+  border-color: #198754;
+  color: white;
+}
+
+.attendance-status-btn.active-absent {
+  background: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.attendance-status-btn.active-leave {
+  background: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+}
+
+.attendance-status-btn:hover {
+  opacity: 0.85;
+}
+
+.student-attendance-page .card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.student-attendance-page .table th {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.student-attendance-page .table td {
+  font-size: 14px;
+}
+
+@media (max-width: 576px) {
+  .attendance-search {
+    max-width: 100%;
+    width: 100%;
+  }
+}

@@ -33,8 +33,12 @@ import SubjectList from './Component/Subject/SubjectList';
 import AssignSubjectTeacher from "./Component/Subject/AssignSubjectTeacher";
 import TeacherList from "./Component/Teacher/TeacherList";
 import AssignSubjectList from "./Component/Teacher/AssignSubjectList";
-
-
+import AssignClassList from "./Component/Teacher/AssignClassList";
+import StudentAttendance from "./Component/Student/StudentAttendance";
+import Section from "./Component/Section/Section";
+import ClassTeacher from "./Component/Teacher/ClassTeacher";
+import AssignStudent from "./Component/Student/AssignStudent"
+import SubjectManagement from "./Component/Subject/SubjectManagement";
 function App() {
   const [count,setCount]=useState(0)
   return (
@@ -93,6 +97,13 @@ function App() {
                                    <Route path="/Teacher-List" element={<TeacherList />} />
                                    <Route path="/Add-Teacher/:id" element={<AddTeacher />} />
                                    <Route path="/Edit-Assign-Subject/:id" element={<AssignSubject />} />
+                                   <Route path="/Assign-Class-List" element={<AssignClassList />} />
+                                   <Route path="/Edit-Assign-Class/:id" element={<AssignClassTeacher />} />
+                                   <Route path="/Student-Attendance" element={<StudentAttendance />} />
+                                   <Route path="/Add-Section" element={<Section />} />
+                                   <Route path="/Class-Teacher" element={<ClassTeacher />} />
+                                   <Route path="/Assign-Students" element={<AssignStudent />} />
+                                   <Route path="/subject-management" element={<SubjectManagement />}/>
                                   
                                    
                                    

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./TeacherList.css";
 
-const API = "http://localhost:5000";
+const API = "https://school-management-backend-ochre.vercel.app";
 
 const TeacherList = () => {
   const [teacherData, setTeacherData] = useState([]);

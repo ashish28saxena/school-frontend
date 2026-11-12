@@ -37,7 +37,7 @@ const nameRegex = /^[A-Za-z][A-Za-z .'-]{1,49}$/;
 const mobileRegex = /^[6-9]\d{9}$/;
 const pincodeRegex = /^\d{6}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const API = "http://localhost:5000/api";
+const API = "https://school-management-backend-ochre.vercel.app/api";
 
 const normalizeYear = (y) => {
   // "2026-2027" -> "2026-27"
@@ -110,13 +110,13 @@ const { id } = useParams();          // 1. sabse pehle
         setMessage({ type: "danger", text: "Student data load nahi ho paya." });
       });
   }
-    fetch("http://localhost:5000/api/class/")
+    fetch("https://school-management-backend-ochre.vercel.app/api/class/")
       .then((res) => res.json())
       .then((result) => setClassData(Array.isArray(result) ? result : []))
       .catch(() => setClassData([]));
 
     
-fetch("http://localhost:5000/api/section/")
+fetch("https://school-management-backend-ochre.vercel.app/api/section/")
   .then((res) => res.json())
   .then((result) => {
     setSectionData(

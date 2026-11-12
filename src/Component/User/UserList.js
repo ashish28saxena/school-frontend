@@ -4,7 +4,7 @@ const UserList=()=>{
     const [data,setData]=useState([])
     const [searchTerm,setSearchTerm]=useState("")
     function getData() {
-  fetch("http://localhost:5000/api/user/userList")
+  fetch("https://school-management-backend-ochre.vercel.app/api/user/userList")
     .then((res) => res.json())
     .then((result) => {
       setData(result);
@@ -19,7 +19,7 @@ function filterData()
 
 function changeSatus(item)
 {
-       fetch("http://localhost:5000/api/user/userSubmit/"+item._id,{
+       fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit/"+item._id,{
             method:"PUT",
             headers:{
                 "Content-type":"application/json"
@@ -36,7 +36,7 @@ function changeSatus(item)
 
 function deleteUser(index)
 {
-     fetch("http://localhost:5000/api/user/userDelete/"+index,{
+     fetch("https://school-management-backend-ochre.vercel.app/api/user/userDelete/"+index,{
       method:"DELETE"
      })
      .then((res)=>res.json())

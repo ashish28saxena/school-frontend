@@ -1,81 +1,121 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const AddClass=()=>{
-    const { id } =useParams();
-    const[className,setClassName]=useState('');
-    const[classSection,setClassSection]=useState('');
-    function submitData()
-    {
-          if(id)
-           {
-              fetch("http://localhost:5000/api/class/update/"+id,{
-                method:"PUT",
-                headers:{
-                   "Content-Type":"application/json",
-                },
-                body:JSON.stringify({
-                    "className":className,
-                    "classSection":classSection
-                })
-              })
 
-              .then((responce)=>responce.json())
-              .then((result)=>console.log(result))
+const API_BASE = "https://school-management-backend-ochre.vercel.app/api/class";
 
-           }else{
-                fetch("http://localhost:5000/api/class/submit",{
-                method:"POST",
-                headers:{
-                   "Content-Type":"application/json",
-                },
-                body:JSON.stringify({
-                    "className":className,
-                    "classSection":classSection
-                })
-              })
+const AddClass = () => {
+  const { id } = useParams();
+  const [className, setClassName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
 
-              .then((responce)=>responce.json())
-              .then((result)=>console.log(result))
-           }
+  function submitData() {
+    if (!className.trim()) {
+      setMessage({ type: "danger", text: "Class name is required." });
+      return;
     }
 
-    function getEditClassData()
-    {
-           fetch("http://localhost:5000/api/class/edit/"+id)
-           .then((responce)=>responce.json())
-           .then((result)=>{
-            setClassName(result.className);
-            setClassSection(result.classSection)
-           })
+    setLoading(true);
+    setMessage({ type: "", text: "" });
+
+    const url = id ? `${API_BASE}/update/${id}` : `${API_BASE}/submit`;
+    const method = id ? "PUT" : "POST";
+
+    fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ className: className.trim() }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setMessage({
+          type: "success",
+          text: id
+            ? "Class updated successfully!"
+            : "Class added successfully!",
+        });
+        if (!id) setClassName("");
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage({
+          type: "danger",
+          text: "Something went wrong. Please try again.",
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
+  function getEditClassData() {
+    fetch(`${API_BASE}/edit/${id}`)
+      .then((response) => response.json())
+      .then((result) => {
+        setClassName(result.className);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    if (id) {
+      getEditClassData();
     }
-    useEffect(()=>{
-           if(id)
-           {
-            getEditClassData();
-           }
-    },[])
-    return(
-        <div>
-            <h1>this is Add Class Form </h1>
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Class Name</label>
-                    <input type="text" class="form-control" placeholder="Enter Class Name" value={className} onChange={(e) => setClassName(e.target.value)} />
+  }, [id]);
 
+  return (
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-5">
+          <div className="card shadow-sm">
+            <div className="card-header bg-primary text-white">
+              <h4 className="mb-0">{id ? "Edit Class" : "Add Class"}</h4>
+            </div>
+
+            <div className="card-body p-4">
+              {message.text && (
+                <div className={`alert alert-${message.type}`} role="alert">
+                  {message.text}
+                </div>
+              )}
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submitData();
+                }}
+              >
+                <div className="mb-4">
+                  <label htmlFor="className" className="form-label fw-semibold">
+                    Class Name
+                  </label>
+                  <input
+                    type="text"
+                    id="className"
+                    className="form-control"
+                    placeholder="Enter Class Name"
+                    value={className}
+                    onChange={(e) => setClassName(e.target.value)}
+                  />
                 </div>
 
-                <br></br>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Class Section</label>
-                    <input type="text" class="form-control" placeholder="Enter Class Section" value={classSection} onChange={(e) => setClassSection(e.target.value)} />
-
+                <div className="d-grid">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? "Please wait..." : id ? "Update" : "Submit"}
+                  </button>
                 </div>
-
-                <br></br>
-                <button type="button" class="btn btn-primary" onClick={submitData}>{(id) ? "Update" : "Submit"}</button>
-            </form>
+              </form>
+            </div>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default AddClass;

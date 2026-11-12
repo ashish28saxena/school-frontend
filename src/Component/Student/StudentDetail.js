@@ -6,7 +6,7 @@ const StudentDetail=()=>{
     const [data,setData]=useState([])
     const {id}=useParams();
     async function getdata() {
-    fetch("http://localhost:5000/api/student/view/" + id)
+    fetch("https://school-management-backend-ochre.vercel.app/api/student/view/" + id)
         .then((response) => response.json())
         .then((result) => {
             setData({
