@@ -39,6 +39,25 @@ import Section from "./Component/Section/Section";
 import ClassTeacher from "./Component/Teacher/ClassTeacher";
 import AssignStudent from "./Component/Student/AssignStudent"
 import SubjectManagement from "./Component/Subject/SubjectManagement";
+import TimetableManagement from "./Component/Timetable/TimetableManagement";
+import WeeklyTimetable from "./Component/Timetable/WeeklyTimetable";
+import TeacherTimetable from "./Component/Timetable/TeacherTimetable";
+import StudentTimetable from "./Component/Timetable/StudentTimetable";
+import ExamMaster from "./Component/Exam/ExamMaster";
+import ExamSchedule from "./Component/Exam/ExamSchedule";
+import MarksEntry from "./Component/Exam/MarksEntry";
+import ExamResult from "./Component/Exam/ExamResult";
+import ReportCard from "./Component/Exam/ReportCard";
+import AdmitCard from "./Component/Exam/AdmitCard";
+import FeeStructure from "./Component/Fee/FeeStructure";
+import FeeCollection from "./Component/Fee/FeeCollection";
+import FeeReceipt from "./Component/Fee/FeeReceipt";
+import FeeDueReport from "./Component/Fee/FeeDueReport";
+import FeeDiscount from "./Component/Fee/FeeDiscount";
+import FeeInstallment from "./Component/Fee/FeeInstallment";
+import StudentIdCard from "./Component/Student/StudentIdCard";
+import Library from "./Component/Library/Library";
+
 function App() {
   const [count,setCount]=useState(0)
   return (
@@ -104,10 +123,24 @@ function App() {
                                    <Route path="/Class-Teacher" element={<ClassTeacher />} />
                                    <Route path="/Assign-Students" element={<AssignStudent />} />
                                    <Route path="/subject-management" element={<SubjectManagement />}/>
-                                  
-                                   
-                                   
-                                  
+                                   <Route path="/timetable-management" element={<TimetableManagement />} />
+                                   <Route path="/Weekly-timetable-management" element={<WeeklyTimetable />} />
+                                   <Route path="/Teacher-timetable-management" element={<TeacherTimetable />} />
+                                   <Route path="/Student-timetable-management" element={<StudentTimetable />} />
+                                   <Route path="/exam-master" element={<ExamMaster />} />
+                                  <Route  path="/exam-schedule" element={<ExamSchedule />} />
+                                  <Route path="/marks-entry" element={<MarksEntry />} />
+                                  <Route path="/exam-result" element={<ExamResult />} />
+                                  <Route path="/report-card/:studentId" element={<ReportCard />} />
+                                  <Route path="/admit-card" element={<AdmitCard />} />
+                                   <Route path="/fee-structure" element={<FeeStructure />} />
+                                   <Route path="/fee-collection" element={<FeeCollection />} />
+                                   <Route path="/fee-receipt" element={<FeeReceipt />} />
+                                    <Route path="/fee-due-report" element={<FeeDueReport />} />
+                                    <Route path="/fee-discount" element={<FeeDiscount />} />
+                                    <Route path="/fee-installment" element={<FeeInstallment />} />
+                                    <Route path="/student-id-card" element={<StudentIdCard />} /> 
+                                    <Route path="/library" element={<Library />} />
                                   
                                   
                                  

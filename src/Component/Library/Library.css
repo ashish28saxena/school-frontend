@@ -1,0 +1,79 @@
+
+.library-page {
+  padding: 20px;
+}
+
+.library-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.library-tabs .btn {
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 8px 15px;
+}
+
+.library-stat {
+  min-height: 115px;
+  border-left: 4px solid #0d6efd !important;
+}
+
+.library-stat p {
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.library-stat h3 {
+  color: #212529;
+}
+
+.library-stat.success {
+  border-left-color: #198754 !important;
+}
+
+.library-stat.info {
+  border-left-color: #0dcaf0 !important;
+}
+
+.library-stat.warning {
+  border-left-color: #ffc107 !important;
+}
+
+.library-stat.danger {
+  border-left-color: #dc3545 !important;
+}
+
+.library-stat.secondary {
+  border-left-color: #6c757d !important;
+}
+
+.library-page .card {
+  border-radius: 8px;
+}
+
+.library-page .card-header {
+  padding: 15px;
+}
+
+.library-page .table th {
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.library-page .table td {
+  font-size: 14px;
+}
+
+@media (max-width: 576px) {
+  .library-page {
+    padding: 10px;
+  }
+
+  .library-tabs .btn {
+    flex: 1 1 auto;
+  }
+}

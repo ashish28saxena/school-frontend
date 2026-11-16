@@ -96,6 +96,9 @@ function Header() {
                 <li>
                   <Link to="/Student-Attendance" className="sm-dropdown-item">Student Attendance</Link>
                 </li>
+                 <li>
+                  <Link to="/student-id-card" className="sm-dropdown-item">Student ID Card</Link>
+                </li>
               </ul>
             </li>
 
@@ -150,6 +153,21 @@ function Header() {
 
               <ul className="sm-dropdown dropdown-menu">
                 <li>
+                  <Link to="/timetable-management" className="sm-dropdown-item">Timetable</Link>
+                </li>
+                <li>
+                  <Link to="/Weekly-timetable-management" className="sm-dropdown-item"> Weekly Timetable View</Link>
+                </li>
+                <li>
+                  <Link to="/Teacher-timetable-management" className="sm-dropdown-item"> Teacher Timetable</Link>
+                </li>
+                <li>
+                  <Link to="/Student-timetable-management" className="sm-dropdown-item"> Student Timetable</Link>
+                </li>
+                
+                
+               
+                {/* <li>
                   <Link to="/Create-Timetable" className="sm-dropdown-item">Create Timetable</Link>
                 </li>
                 <li>
@@ -160,7 +178,7 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/Subjectwise-Schedule" className="sm-dropdown-item">Subject-wise Schedule</Link>
-                </li>
+                </li> */}
               </ul>
             </li>
 
@@ -172,31 +190,88 @@ function Header() {
 
               <ul className="sm-dropdown dropdown-menu">
                 <li>
-                  <Link to="/Create-Exam" className="sm-dropdown-item">Create Exam</Link>
+                  <Link to="/exam-master" className="sm-dropdown-item">Exam Master</Link>
                 </li>
                 <li>
-                  <Link to="/Mid-Term" className="sm-dropdown-item">Mid Term</Link>
+                  <Link to="/exam-schedule" className="sm-dropdown-item"> Exam Schedule </Link>
+                </li>
+                
+
+                <li>
+                  <Link to="/marks-entry" className="sm-dropdown-item">Marks Entry</Link>
+                </li>
+
+                <li>
+                  <Link to="/exam-result" className="sm-dropdown-item">Exam Result</Link>
+                </li>
+
+                <li>
+                  <Link to="/exam-schedule" className="sm-dropdown-item">Exam Schedule</Link>
+                </li>
+
+                <li>
+                  <Link to="/report-card-list" className="sm-dropdown-item">Report Card</Link>
                 </li>
                 <li>
-                  <Link to="/Final-Exam" className="sm-dropdown-item">Final Exam</Link>
+                  <Link to="/admit-card" className="sm-dropdown-item"> Admit Card</Link>
+                </li>
+                
+                
+              </ul>
+            </li>
+
+
+            {/* ================= Fee Management Management ================= */}
+            <li className="nav-item dropdown">
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Fee Management
+              </Link>
+
+              <ul className="sm-dropdown dropdown-menu">
+                <li>
+                  <Link to="/fee-structure" className="sm-dropdown-item">Fee Structure</Link>
                 </li>
                 <li>
-                  <Link to="/Unit-Test" className="sm-dropdown-item">Unit Test</Link>
+                  <Link to="/fee-collection" className="sm-dropdown-item">Fee Collection</Link>
                 </li>
+
                 <li>
-                  <Link to="/Subjectwise-Marks" className="sm-dropdown-item">Subject-wise Marks</Link>
+                  <Link to="/fee-receipt" className="sm-dropdown-item">Fee Receipt</Link>
                 </li>
+
                 <li>
-                  <Link to="/Grade-Calculation" className="sm-dropdown-item">Grade Calculation</Link>
+                  <Link to="/fee-due-report" className="sm-dropdown-item">Fee Due Report</Link>
                 </li>
+
                 <li>
-                  <Link to="/Result-Generation" className="sm-dropdown-item">Result Generation</Link>
+                  <Link to="/fee-discount" className="sm-dropdown-item">Fee Discount / Concession</Link>
                 </li>
+                
+                 <li>
+                  <Link to="/fee-installment" className="sm-dropdown-item">Fee Installment</Link>
+                </li>
+                
+              </ul>
+            </li>
+
+
+             {/* ================= Library Management Management ================= */}
+            <li className="nav-item dropdown">
+              <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
+                Library Management
+              </Link>
+
+              <ul className="sm-dropdown dropdown-menu">
+                <li>
+                  <Link to="/library" className="sm-dropdown-item">Library Management</Link>
+                </li>
+                
+                
               </ul>
             </li>
 
             {/* ================= Result & Report Card ================= */}
-            <li className="nav-item dropdown">
+            {/* <li className="nav-item dropdown">
               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
                 Result & Report Card
               </Link>
@@ -221,7 +296,7 @@ function Header() {
                   <Link to="/Report-Card-PDF" className="sm-dropdown-item">Download Report Card PDF</Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
           </ul>
 
