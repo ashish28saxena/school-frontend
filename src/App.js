@@ -57,6 +57,17 @@ import FeeDiscount from "./Component/Fee/FeeDiscount";
 import FeeInstallment from "./Component/Fee/FeeInstallment";
 import StudentIdCard from "./Component/Student/StudentIdCard";
 import Library from "./Component/Library/Library";
+import TransportDashboard from "./Component/Transport/TransportDashboard";
+import VehicleManagement from "./Component/Transport/VehicleManagement";
+import DriverManagement from "./Component/Transport/DriverManagement";
+import RouteManagement from "./Component/Transport/RouteManagement";
+import RouteAssignment from "./Component/Transport/RouteAssignment";
+import StudentTransportAssignment from "./Component/Transport/StudentTransportAssignment";
+import TransportFeeManagement from "./Component/Transport/TransportFeeManagement";
+import TransportAttendance from "./Component/Transport/TransportAttendance";
+import VehicleMaintenance from "./Component/Transport/VehicleMaintenance";
+import TransportReports from "./Component/Transport/TransportReports";
+import ParentManagement from "./Component/Parent/ParentManagement";
 
 function App() {
   const [count,setCount]=useState(0)
@@ -78,7 +89,7 @@ function App() {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/todo" element={<TodoList />} />
                                 <Route path="/user" element={<UserList />} />
-                                <Route path="/parent" element={<ParentList />} />
+                                {/* <Route path="/parent" element={<ParentList />} /> */}
                                 <Route path="/counterwatch" element={<CounterWatch />} />
                                  <Route path="/login" element={<Login />} />
                                  <Route path="/quotesList" element={<QuotesList />} />
@@ -141,10 +152,17 @@ function App() {
                                     <Route path="/fee-installment" element={<FeeInstallment />} />
                                     <Route path="/student-id-card" element={<StudentIdCard />} /> 
                                     <Route path="/library" element={<Library />} />
-                                  
-                                  
-                                 
-                            </Routes>
+                                    <Route path="/transport/dashboard" element={<TransportDashboard />} />
+                                    <Route path="/transport/vehicles" element={<VehicleManagement />} />
+                                    <Route path="/transport/drivers" element={<DriverManagement />} />
+                                    <Route path="/transport/routes" element={<RouteManagement />} />
+                                    <Route path="/transport/assignments" element={<RouteAssignment />} />
+                                    <Route path="/transport/student-assignments" element={<StudentTransportAssignment />} />
+                                    <Route path="/transport/fees" element={<TransportFeeManagement />} />
+                                    <Route path="/transport/attendance" element={<TransportAttendance />} />                            
+                                    <Route path="/transport/maintenance" element={<VehicleMaintenance />} />    
+                                    <Route path="/transport/reports" element={<TransportReports />} />
+                                    <Route path="/parent" element={<ParentManagement />}/></Routes>
               
         
       
