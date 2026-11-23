@@ -42,11 +42,12 @@ const TransportAttendance = () => {
   const [savingId, setSavingId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url, options = {}) => {
     const response = await fetch(`${API}${url}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...options.headers,
       },
       ...options,
@@ -65,8 +66,16 @@ const TransportAttendance = () => {
   const loadInitialData = async () => {
     try {
       const [routeRes, assignmentRes] = await Promise.all([
-        request("/routes"),
-        request("/student-transports"),
+        request("/routes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        request("/student-transports", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       setRoutes(routeRes.data || []);
@@ -88,7 +97,11 @@ const TransportAttendance = () => {
       setError("");
 
       const result = await request(
-        `/attendance?date=${attendanceDate}&routeId=${routeId}`
+        `/attendance?date=${attendanceDate}&routeId=${routeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       setAttendance(result.data || []);
@@ -178,11 +191,17 @@ const TransportAttendance = () => {
       if (existing?._id && !String(existing._id).startsWith("local-")) {
         result = await request(`/attendance/update/${existing._id}`, {
           method: "PUT",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        },
           body: JSON.stringify(payload),
         });
       } else {
         result = await request("/attendance/submit", {
           method: "POST",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        },
           body: JSON.stringify(payload),
         });
       }
@@ -234,11 +253,17 @@ const TransportAttendance = () => {
         if (existing?._id && !String(existing._id).startsWith("local-")) {
           await request(`/attendance/update/${existing._id}`, {
             method: "PUT",
+            headers: {
+          Authorization: `Bearer ${token}`,
+        },
             body: JSON.stringify(payload),
           });
         } else {
           await request("/attendance/submit", {
             method: "POST",
+            headers: {
+          Authorization: `Bearer ${token}`,
+        },
             body: JSON.stringify(payload),
           });
         }
@@ -269,7 +294,11 @@ const TransportAttendance = () => {
 
     try {
       setLoading(true);
-      const result = await request(`/attendance/student/${studentId}`);
+      const result = await request(`/attendance/student/${studentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setStudentHistory(result.data || []);
     } catch (err) {
       setError(err.message);

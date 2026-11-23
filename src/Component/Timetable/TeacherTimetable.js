@@ -15,14 +15,18 @@ function TeacherTimetable() {
   const [academicYear, setAcademicYear] = useState("2026-27");
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetchTeachers();
   }, []);
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch(`${API}/teacher/`);
+      const response = await fetch(`${API}/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setTeachers(result.data || []);
     } catch (error) {
@@ -53,7 +57,11 @@ function TeacherTimetable() {
       setLoading(true);
 
       const response = await fetch(
-        `${API}/timetable/teacher/${teacherID}?academicYear=${academicYear}`
+        `${API}/timetable/teacher/${teacherID}?academicYear=${academicYear}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();

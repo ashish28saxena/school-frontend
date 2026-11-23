@@ -8,6 +8,7 @@ function FeeDueReport() {
   const [sections, setSections] = useState([]);
   const [data, setData] = useState([]);
   const [summary, setSummary] = useState({});
+   const token = localStorage.getItem("token");
   const [filters, setFilters] = useState({
     classId: "",
     sectionId: "",
@@ -17,8 +18,16 @@ function FeeDueReport() {
 
   React.useEffect(() => {
     Promise.all([
-      fetch(`${API}/class/`).then((r) => r.json()),
-      fetch(`${API}/section/`).then((r) => r.json()),
+      fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((r) => r.json()),
+      fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((r) => r.json()),
     ]).then(([c, s]) => {
       setClasses(c || []);
       setSections(s.data || []);
@@ -42,7 +51,11 @@ function FeeDueReport() {
         if (value) params.append(key, value);
       });
 
-      const response = await fetch(`${API}/feedue/?${params.toString()}`);
+      const response = await fetch(`${API}/feedue/?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) throw new Error(result.message);

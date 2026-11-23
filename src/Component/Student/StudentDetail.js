@@ -5,8 +5,13 @@ import "./StudentDetails.css";
 const StudentDetail=()=>{
     const [data,setData]=useState([])
     const {id}=useParams();
+     const token = localStorage.getItem("token");
     async function getdata() {
-    fetch("https://school-management-backend-ochre.vercel.app/api/student/view/" + id)
+    fetch("https://school-management-backend-ochre.vercel.app/api/student/view/" + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((result) => {
             setData({

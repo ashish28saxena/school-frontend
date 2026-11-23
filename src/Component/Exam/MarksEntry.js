@@ -8,9 +8,13 @@ function MarksEntry() {
   const [schedule, setSchedule] = useState(null);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
-
+   const token = localStorage.getItem("token");
   useEffect(() => {
-    fetch(`${API}/examschedule/`)
+    fetch(`${API}/examschedule/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setSchedules(result.data || []))
       .catch(() => alert("Unable to fetch schedules"));
@@ -24,7 +28,11 @@ function MarksEntry() {
     if (!id) return;
 
     try {
-      const response = await fetch(`${API}/exammark/students/${id}`);
+      const response = await fetch(`${API}/exammark/students/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -112,7 +120,7 @@ function MarksEntry() {
 
       const response = await fetch(`${API}/exammark/submit`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 

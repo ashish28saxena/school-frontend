@@ -39,6 +39,7 @@ function Library() {
   const [classes, setClasses] = useState([]);
 const [classId, setClassId] = useState("");
 const [classStudents, setClassStudents] = useState([]);
+ const token = localStorage.getItem("token");
 
   const [issueForm, setIssueForm] = useState({
     bookId: "",
@@ -74,6 +75,7 @@ const [finePaymentForm, setFinePaymentForm] = useState({
     const response = await fetch(`${API}${url}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...options.headers,
       },
       ...options,
@@ -170,6 +172,9 @@ const loadAll = async () => {
 
       await request(url, {
         method: categoryId ? "PUT" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           categoryName,
           description: categoryDescription,
@@ -200,6 +205,9 @@ const loadAll = async () => {
     try {
       const result = await request(`/category/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
       notify(result.message);
       fetchCategories();
@@ -234,6 +242,9 @@ const loadAll = async () => {
 
       const result = await request(url, {
         method: bookId ? "PUT" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -275,6 +286,9 @@ const loadAll = async () => {
     try {
       const result = await request(`/book/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
       notify(result.message);
       fetchBooks();
@@ -290,7 +304,11 @@ const loadAll = async () => {
     const code = barcodeInput.trim();
     if (!code) return;
     try {
-      const result = await request(`/book/barcode/${encodeURIComponent(code)}`);
+      const result = await request(`/book/barcode/${encodeURIComponent(code)}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setBarcodeBook(result.data || null);
     } catch (err) {
       setBarcodeBook(null);
@@ -332,6 +350,9 @@ const loadAll = async () => {
 
       const result = await request("/issue", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -362,6 +383,9 @@ const loadAll = async () => {
     try {
       const result = await request(`/return/${id}`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           returnDate: new Date().toISOString().slice(0, 10),
         }),
@@ -401,7 +425,11 @@ const loadAll = async () => {
   // Fetch classes
 const fetchClasses = async () => {
   try {
-    const result = await fetch("https://school-management-backend-ochre.vercel.app/api/class/");
+    const result = await fetch("https://school-management-backend-ochre.vercel.app/api/class/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     const data = await result.json();
 
     setClasses(data || []);
@@ -553,7 +581,11 @@ const getOverdueFine = (item) => {
 // Fetch pending fines
 const fetchPendingFines = async () => {
   try {
-    const result = await request("/fine-pending");
+    const result = await request("/fine-pending", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     setPendingFines(result.data || []);
   } catch (error) {
     showError(error);
@@ -563,7 +595,11 @@ const fetchPendingFines = async () => {
 // Fetch payment history
 const fetchFinePayments = async () => {
   try {
-    const result = await request("/fine-collections");
+    const result = await request("/fine-collections", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     setFinePayments(result.data || []);
   } catch (error) {
     showError(error);
@@ -600,6 +636,9 @@ const handleFinePaymentSubmit = async (e) => {
   try {
     const result = await request("/fine-collection", {
       method: "POST",
+       headers: {
+          Authorization: `Bearer ${token}`,
+        },
       body: JSON.stringify({
         issueId: selectedFine._id,
         ...finePaymentForm,

@@ -1,385 +1,5 @@
-// import React from "react";
-// import "./Header.css";
-// import { Link } from "react-router-dom";
-
-// function Header() {
-//   return (
-//     <nav className="sm-navbar navbar navbar-expand-lg">
-//       <div className="container-fluid">
-
-//         {/* Logo */}
-//         <Link to="/" className="sm-brand">
-//           <span className="sm-brand-mark">SM</span>
-//           <span className="sm-brand-text">School Management</span>
-//         </Link>
-
-//         {/* Mobile Button */}
-//         <button
-//           className="sm-toggler navbar-toggler"
-//           type="button"
-//           data-bs-toggle="collapse"
-//           data-bs-target="#schoolNavbar"
-//         >
-//           <span className="sm-toggler-bar"></span>
-//           <span className="sm-toggler-bar"></span>
-//           <span className="sm-toggler-bar"></span>
-//         </button>
-
-//         <div className="collapse navbar-collapse" id="schoolNavbar">
-
-//           <ul className="sm-nav navbar-nav ms-3">
-
-            
-
-
-
-//             {/* ================= ATTENDANCE ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Attendance
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/Attenddence-list" className="sm-dropdown-item">Take Attendance</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Attenddence-student-list" className="sm-dropdown-item">Attendance Report</Link>
-//                 </li>
-//               </ul>
-//             </li>
-
-//             {/* =================Student Teacher Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Student / Teacher Management
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/Add-Student" className="sm-dropdown-item">Student Registration</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Student-List" className="sm-dropdown-item">Student List</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Add-Teacher" className="sm-dropdown-item">Add Teacher</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Teacher-List" className="sm-dropdown-item">Teacher List</Link>
-//                 </li>
-                
-                
-//                 <li>
-//                   <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subject</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Assign-Subject-List" className="sm-dropdown-item">Assign Subject List</Link>
-//                 </li>
-                
-//                 <li>
-//                   <Link to="/Assign-Class-Teacher" className="sm-dropdown-item">Assign Class</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Assign-Class-List" className="sm-dropdown-item">Assign Class List</Link>
-//                 </li>
-                
-//                 <li>
-//                   <Link to="/Assign-Class" className="sm-dropdown-item">Assign Section</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Teacher-Attendance" className="sm-dropdown-item">Teacher Attendance</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Teacher-Salary" className="sm-dropdown-item">Salary Details</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Student-Attendance" className="sm-dropdown-item">Student Attendance</Link>
-//                 </li>
-//                  <li>
-//                   <Link to="/student-id-card" className="sm-dropdown-item">Student ID Card</Link>
-//                 </li>
-//               </ul>
-//             </li>
-
-//             {/* ================= Class & Section Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Class & Section
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/Class-List" className="sm-dropdown-item">Class List</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Add-Class" className="sm-dropdown-item">Add Class</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Add-Section" className="sm-dropdown-item">Section</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Class-Teacher" className="sm-dropdown-item">Assign Class Teacher</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Assign-Students" className="sm-dropdown-item">Assign Students</Link>
-//                 </li>
-                
-//               </ul>
-//             </li>
-
-//             {/* ================= Subject Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Subject Management
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                     <Link to="/subject-management" className="sm-dropdown-item"> Subject Management</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Assign-Subject" className="sm-dropdown-item">Assign Subjects</Link>
-//                 </li>
-                
-//               </ul>
-//             </li>
-
-//             {/* ================= Timetable Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Timetable
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/timetable-management" className="sm-dropdown-item">Timetable</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Weekly-timetable-management" className="sm-dropdown-item"> Weekly Timetable View</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Teacher-timetable-management" className="sm-dropdown-item"> Teacher Timetable</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Student-timetable-management" className="sm-dropdown-item"> Student Timetable</Link>
-//                 </li>
-                
-                
-               
-//                 {/* <li>
-//                   <Link to="/Create-Timetable" className="sm-dropdown-item">Create Timetable</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Classwise-Timetable" className="sm-dropdown-item">Class-wise Timetable</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Teacherwise-Timetable" className="sm-dropdown-item">Teacher-wise Timetable</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Subjectwise-Schedule" className="sm-dropdown-item">Subject-wise Schedule</Link>
-//                 </li> */}
-//               </ul>
-//             </li>
-
-//             {/* ================= Examination Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Examination
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/exam-master" className="sm-dropdown-item">Exam Master</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/exam-schedule" className="sm-dropdown-item"> Exam Schedule </Link>
-//                 </li>
-                
-
-//                 <li>
-//                   <Link to="/marks-entry" className="sm-dropdown-item">Marks Entry</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/exam-result" className="sm-dropdown-item">Exam Result</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/exam-schedule" className="sm-dropdown-item">Exam Schedule</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/report-card-list" className="sm-dropdown-item">Report Card</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/admit-card" className="sm-dropdown-item"> Admit Card</Link>
-//                 </li>
-                
-                
-//               </ul>
-//             </li>
-
-
-//             {/* ================= Fee Management Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Fee Management
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/fee-structure" className="sm-dropdown-item">Fee Structure</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/fee-collection" className="sm-dropdown-item">Fee Collection</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/fee-receipt" className="sm-dropdown-item">Fee Receipt</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/fee-due-report" className="sm-dropdown-item">Fee Due Report</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/fee-discount" className="sm-dropdown-item">Fee Discount / Concession</Link>
-//                 </li>
-                
-//                  <li>
-//                   <Link to="/fee-installment" className="sm-dropdown-item">Fee Installment</Link>
-//                 </li>
-                
-//               </ul>
-//             </li>
-
-
-//              {/* ================= Library Management Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Library Management
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/library" className="sm-dropdown-item">Library Management</Link>
-//                 </li>
-                
-                
-//               </ul>
-//             </li>
-
-
-//              {/* ================= Transport Management ================= */}
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Transport Management
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/transport/dashboard" className="sm-dropdown-item">Transport Dashboard</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/vehicles" className="sm-dropdown-item">Vehicle Management</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/drivers" className="sm-dropdown-item">Driver Management</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/routes" className="sm-dropdown-item">Route Management</Link>
-//                 </li>
-
-//                  <li>
-//                   <Link to="/transport/assignments" className="sm-dropdown-item">Vehicle & Driver Assignment</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/student-assignments" className="sm-dropdown-item">Student Transport Assignment</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/fees" className="sm-dropdown-item">Transport Fee Management</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/attendance" className="sm-dropdown-item">Transport Attendance</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/maintenance" className="sm-dropdown-item">Vehicle Maintenance</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link to="/transport/reports" className="sm-dropdown-item">Transport Reports</Link>
-//                 </li>
-                
-                
-//               </ul>
-//             </li>
-
-//             {/* ================= Result & Report Card ================= */}
-//             {/* <li className="nav-item dropdown">
-//               <Link to="#" className="sm-link dropdown-toggle" data-bs-toggle="dropdown">
-//                 Result & Report Card
-//               </Link>
-
-//               <ul className="sm-dropdown dropdown-menu">
-//                 <li>
-//                   <Link to="/Student-Result" className="sm-dropdown-item">Student Result</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Percentage-Calculation" className="sm-dropdown-item">Percentage Calculation</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Grade" className="sm-dropdown-item">Grade</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Rank" className="sm-dropdown-item">Rank</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Pass-Fail" className="sm-dropdown-item">Pass / Fail</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/Report-Card-PDF" className="sm-dropdown-item">Download Report Card PDF</Link>
-//                 </li>
-//               </ul>
-//             </li> */}
-
-//           </ul>
-
-//           {/* Right Side */}
-//           <ul className="sm-nav-right navbar-nav ms-auto">
-//             <li className="nav-item dropdown">
-//               <Link to="#" className="sm-profile dropdown-toggle" data-bs-toggle="dropdown">
-//                 <span className="sm-avatar">A</span>
-//                 <span className="sm-profile-name">Admin</span>
-//               </Link>
-//               <ul className="sm-dropdown sm-dropdown--right dropdown-menu">
-//                 <li>
-//                   <Link to="/profile" className="sm-dropdown-item">Profile</Link>
-//                 </li>
-//                 <li>
-//                   <Link to="/logout" className="sm-dropdown-item sm-dropdown-item--danger">Logout</Link>
-//                 </li>
-//               </ul>
-//             </li>
-//           </ul>
-
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default Header;
-
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 
 /* ------------------------------------------------------------------
@@ -489,18 +109,21 @@ const MENU = [
       { label: "Transport Reports", to: "/transport/reports" },
     ],
   },
-
   {
     id: "parent",
     label: "Parent Management",
-    items: [
-      { label: "Parent Management", to: "/parent" },
-      
-    ],
+    items: [{ label: "Parent Management", to: "/parent" }],
   },
 ];
 
 const same = (a, b) => a.toLowerCase() === b.toLowerCase();
+const getUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem("user")) || {};
+  } catch {
+    return {};
+  }
+};
 
 function GridIcon() {
   return (
@@ -513,18 +136,32 @@ function GridIcon() {
   );
 }
 
-function Header() {
+function Header({ onLogout }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [panelOpen, setPanelOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [query, setQuery] = useState("");
   const wrapRef = useRef(null);
+  const [user, setUser] = useState(getUser);
+  const displayName = user.name || "User";
+  const displayRole = user.role || "";
+
+  // Logout: token hatao, App ki state false karo, login page pe bhejo
+  const handleLogout = () => {
+    setProfileOpen(false);
+    localStorage.removeItem("token");
+    onLogout?.();
+    navigate("/login", { replace: true });
+  };
+
 
   // Page change par sab band
   useEffect(() => {
     setPanelOpen(false);
     setProfileOpen(false);
     setQuery("");
+    setUser(getUser());
   }, [pathname]);
 
   // Bahar click ya Esc par band
@@ -609,12 +246,14 @@ function Header() {
             onClick={() => setProfileOpen((v) => !v)}
           >
             <span className="sm-avatar">A</span>
-            <span className="sm-profile-name">Admin</span>
+            <span className="sm-profile-name">{displayName}</span>
           </button>
           {profileOpen && (
             <div className="sm-profile-menu">
               <Link to="/profile">Profile</Link>
-              <Link to="/logout" className="is-danger">Logout</Link>
+              <button type="button" className="is-danger" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           )}
         </div>

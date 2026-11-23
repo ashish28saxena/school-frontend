@@ -10,14 +10,23 @@ const Attenddence = () => {
      const [attendanceMark,setAttendanceMark]=useState([]);
      const [presentStudent,setPresentStudent]=useState(0)
       const [absentStudent,setAbsentStudent]=useState(0)
+       const token = localStorage.getItem("token");
     function getclassNamedata() {
-        fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+        fetch("https://school-management-backend-ochre.vercel.app/api/class/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
             .then((responce) => responce.json())
             .then((result) => setclassNameData(result))
     }
 
     function getTeacherData() {
-        fetch("https://school-management-backend-ochre.vercel.app/api/user/userList")
+        fetch("https://school-management-backend-ochre.vercel.app/api/user/userList", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
             .then((res) => res.json())
             .then((result) => {
                 setteacherData(result);
@@ -29,7 +38,11 @@ const Attenddence = () => {
 
     async function getStudentData(val) {
         setClassAttendence(val);
-        await fetch("https://school-management-backend-ochre.vercel.app/api/student/search?q="+val)
+        await fetch("https://school-management-backend-ochre.vercel.app/api/student/search?q="+val, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((responce)=>responce.json())
         .then((result)=>setStudentData(result))
     }
@@ -108,6 +121,7 @@ function setAttendance(item, mark) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(attendanceMark),
             }

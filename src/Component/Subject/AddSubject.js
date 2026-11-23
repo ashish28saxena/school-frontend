@@ -14,7 +14,7 @@ function AddSubject() {
 });
 
   const [classData,setClassData]=useState([])
-
+   const token = localStorage.getItem("token");
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
@@ -31,7 +31,8 @@ function AddSubject() {
       await fetch("https://school-management-backend-ochre.vercel.app/api/subject/update/"+id,{
          method: "PUT",
          headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
     },
          body: JSON.stringify(form)
     })
@@ -43,7 +44,8 @@ function AddSubject() {
         await fetch("https://school-management-backend-ochre.vercel.app/api/subject/submit",{
          method: "POST",
          headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
     },
          body: JSON.stringify(form)
     })
@@ -58,7 +60,11 @@ function AddSubject() {
   };
 
   async function getClassdata() {
-    await fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+    await fetch("https://school-management-backend-ochre.vercel.app/api/class/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((result) => setClassData(result))
         .catch((error) => console.log(error));
@@ -69,7 +75,11 @@ async function getEditSubject() {
     if (!id) return;
 
     const response = await fetch(
-      `https://school-management-backend-ochre.vercel.app/api/subject/edit/${id}`
+      `https://school-management-backend-ochre.vercel.app/api/subject/edit/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     const result = await response.json();

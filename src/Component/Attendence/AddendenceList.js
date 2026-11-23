@@ -10,6 +10,7 @@ const AddendenceList = () => {
     const [attendanceMark, setAttendanceMark] = useState([]);
     const [presentStudent, setPresentStudent] = useState(0)
     const [absentStudent, setAbsentStudent] = useState(0)
+     const token = localStorage.getItem("token");
     function getclassNamedata() {
         fetch("https://school-management-backend-ochre.vercel.app/api/class/")
             .then((responce) => responce.json())
@@ -20,7 +21,11 @@ const AddendenceList = () => {
 
     async function searchData() {
         await fetch(
-            `https://school-management-backend-ochre.vercel.app/api/attendence/get/${classAttendence}/${attenddencedate}`
+            `https://school-management-backend-ochre.vercel.app/api/attendence/get/${classAttendence}/${attenddencedate}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
         )
             .then((response) => response.json())
             .then((result) => {

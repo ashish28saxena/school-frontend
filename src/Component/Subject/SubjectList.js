@@ -8,7 +8,7 @@ function SubjectList() {
   const [subjects, setSubjects] = useState([]);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
-
+    const token = localStorage.getItem("token");
  
 
   const toggleStatus = (id) => {
@@ -30,7 +30,11 @@ function SubjectList() {
 
   async function getSubjectData()
   {
-      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject");
+      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         const result = await response.json();
 
         setSubjects(result.data || []);

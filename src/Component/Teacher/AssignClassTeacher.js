@@ -14,7 +14,7 @@ const { id } = useParams();
     const [teacherData, setTeacherData] = useState([]);
   const [classData, setClassData] = useState([]);
   const [sectionData, setSectionData] = useState([]);
-
+   const token = localStorage.getItem("token");
   const handleChange = (e) => {
 
     const { name, value, type, checked } = e.target;
@@ -46,7 +46,8 @@ const handleSubmit = async (e) => {
     const response = await fetch(url, {
       method: id ? "PUT" : "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload)
     });
@@ -84,25 +85,41 @@ const handleSubmit = async (e) => {
   };
 
   async function getTeacher() {
-         const response = await fetch(`${API}/api/teacher/`);
+         const response = await fetch(`${API}/api/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
          const result = await response.json();
          setTeacherData(result.data || []);
   }
 
    async function getClassData() {
-         const response = await fetch(`${API}/api/class/`);
+         const response = await fetch(`${API}/api/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
          const result = await response.json();
          setClassData(result || []);
   }
 
   async function getSectionData() {
-         const response = await fetch(`${API}/api/section/`);
+         const response = await fetch(`${API}/api/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
          const result = await response.json();
          setSectionData(result.data || []); 
   }
 
     async function editAssignClassData(updateid) {
-         const response = await fetch(`${API}/api/assignclass/edit/`+updateid);
+         const response = await fetch(`${API}/api/assignclass/edit/`+updateid, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
          const result = await response.json();
          let result1=result.data || []; 
          

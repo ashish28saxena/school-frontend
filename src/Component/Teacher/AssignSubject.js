@@ -24,6 +24,7 @@ function AssignSubject() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+   const token = localStorage.getItem("token");
 
   const getData = (response) =>
     Array.isArray(response.data) ? response.data : [];
@@ -32,11 +33,31 @@ function AssignSubject() {
   const fetchData = async () => {
     try {
       const responses = await Promise.all([
-        fetch(`${API}/teacher/`),
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
-        fetch(`${API}/subject/`),
-        fetch(`${API}/assignsubject/`),
+        fetch(`${API}/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/subject/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/assignsubject/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       if (responses.some((response) => !response.ok)) {
@@ -99,6 +120,7 @@ function AssignSubject() {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });
@@ -147,7 +169,11 @@ function AssignSubject() {
     try {
       const response = await fetch(
         `${API}/assignsubject/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+            headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
 
       const result = await response.json();

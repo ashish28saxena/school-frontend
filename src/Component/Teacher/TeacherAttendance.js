@@ -18,13 +18,17 @@ const TeacherAttendance = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-
+   const token = localStorage.getItem("token");
   // Load teachers + any attendance already saved for the selected date
   const loadAttendance = useCallback(async (selectedDate, isCancelled = () => false) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${API}/api/teacherAttendance/date/${selectedDate}`
+        `${API}/api/teacherAttendance/date/${selectedDate}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       const result = await response.json();
       if (isCancelled()) return;
@@ -117,7 +121,7 @@ const TeacherAttendance = () => {
     try {
       const response = await fetch(`${API}/api/teacherAttendance/bulk`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" ,Authorization: `Bearer ${token}`},
         body: JSON.stringify(payload),
       });
       const result = await response.json();

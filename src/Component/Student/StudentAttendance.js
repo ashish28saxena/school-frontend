@@ -26,6 +26,7 @@ const StudentAttendance = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+   const token = localStorage.getItem("token");
 
   // Load classes
   useEffect(() => {
@@ -35,7 +36,11 @@ const StudentAttendance = () => {
 
   const getClasses = async () => {
     try {
-      const res = await fetch(URLS.classes);
+      const res = await fetch(URLS.classes, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await res.json();
       setClasses(Array.isArray(result) ? result : result.data || []);
     } catch (error) {
@@ -45,7 +50,11 @@ const StudentAttendance = () => {
 
   const getSections = async () => {
     try {
-      const res = await fetch(URLS.sections);
+      const res = await fetch(URLS.sections, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await res.json();
       setSections(Array.isArray(result) ? result : result.data || []);
     } catch (error) {
@@ -68,7 +77,11 @@ const StudentAttendance = () => {
         sectionId,
       });
 
-      const res = await fetch(`${URLS.students}?${params}`);
+      const res = await fetch(`${URLS.students}?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await res.json();
 
       const studentList = Array.isArray(result)
@@ -106,7 +119,11 @@ const StudentAttendance = () => {
       });
 
       const res = await fetch(
-        `${URLS.attendance}/get?${params}`
+        `${URLS.attendance}/get?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       if (!res.ok) return;
@@ -242,6 +259,7 @@ const StudentAttendance = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(payload),
       });

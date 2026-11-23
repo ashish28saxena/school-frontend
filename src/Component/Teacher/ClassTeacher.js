@@ -17,15 +17,27 @@ function ClassTeacher() {
   const [sections, setSections] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(false);
-
+   const token = localStorage.getItem("token");
   // Fetch dropdown data
   const fetchDropdowns = async () => {
     try {
       const [teacherRes, classRes, sectionRes] =
         await Promise.all([
-          fetch(`${API}/teacher/`),
-          fetch(`${API}/class/`),
-          fetch(`${API}/section/`)
+          fetch(`${API}/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         ]);
 
       const teacherData = await teacherRes.json();
@@ -45,7 +57,11 @@ function ClassTeacher() {
   const fetchAssignments = async () => {
     try {
       const response = await fetch(
-        `${API}/assignclassteacher/`
+        `${API}/assignclassteacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();
@@ -84,7 +100,8 @@ function ClassTeacher() {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(form)
         }
@@ -130,7 +147,10 @@ function ClassTeacher() {
       const response = await fetch(
         `${API}/assignclassteacher/delete/${id}`,
         {
-          method: "DELETE"
+          method: "DELETE",
+           headers: {
+          Authorization: `Bearer ${token}`,
+        }
         }
       );
 

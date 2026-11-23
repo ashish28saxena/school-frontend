@@ -8,10 +8,14 @@ const ClassList = () => {
   const [searchItem, setSearchItem] = useState("");
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ type: "", text: "" });
-
+    const token = localStorage.getItem("token");
   function getData() {
     setLoading(true);
-    fetch(`${API_BASE}/`)
+    fetch(`${API_BASE}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => response.json())
       .then((result) => setClassData(Array.isArray(result) ? result : []))
       .catch((error) => {
@@ -21,29 +25,47 @@ const ClassList = () => {
       .finally(() => setLoading(false));
   }
 
-  function deleteClass(item) {
-    if (!window.confirm(`Are you sure you want to delete "${item.className}"?`)) {
-      return;
-    }
+function deleteClass(item) {
+  if (!window.confirm(`Are you sure you want to delete "${item.className}"?`)) {
+    return;
+  }
 
-    fetch(`${API_BASE}/delete/${item._id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        // Remove the deleted item from the list immediately
-        setClassData((prev) => prev.filter((c) => c._id !== item._id));
-        setMessage({ type: "success", text: "Class deleted successfully!" });
-      })
-      .catch((error) => {
-        console.error(error);
+  fetch(`${API_BASE}/delete/${item._id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+
+      if (result.status === 200 || result.success) {
+        // Remove deleted item from list
+        setClassData((prev) =>
+          prev.filter((c) => c._id !== item._id)
+        );
+
+        setMessage({
+          type: "success",
+          text: "Class deleted successfully!",
+        });
+      } else {
         setMessage({
           type: "danger",
-          text: "Something went wrong while deleting. Please try again.",
+          text: result.message || "Failed to delete class.",
         });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+
+      setMessage({
+        type: "danger",
+        text: "Something went wrong while deleting. Please try again.",
       });
-  }
+    });
+}
 
   useEffect(() => {
     getData();

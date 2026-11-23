@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+
 const initialValues = {
   studentName: "",
   dataOfBirth: "",
@@ -21,6 +22,7 @@ const initialValues = {
   city: "",
   state: "",
   pincode: "",
+  password: "",
   isconfirm: false,
 };
 
@@ -47,92 +49,108 @@ const normalizeYear = (y) => {
 };
 
 const AddStudent = () => {
+  const { id } = useParams();
+  const isEdit = Boolean(id);
+  const token = localStorage.getItem("token");
   const [values, setValues] = useState(initialValues);
   const [files, setFiles] = useState(initialFiles);
   const [fileKey, setFileKey] = useState(0); // file inputs ko reset karne ke liye
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   const [classData, setClassData] = useState([]);
   const [stateData, setStateData] = useState([]);
   const genderData = ["Male", "Female", "Other"];
   const bloodGroupData = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-  const [sectionData,setSectionData] =useState([])
+  const [sectionData, setSectionData] = useState([]);
   const [existingFiles, setExistingFiles] = useState({});
 
-
-
   const topRef = useRef(null);
-const { id } = useParams();          // 1. sabse pehle
-  const isEdit = Boolean(id);  
+
   useEffect(() => {
-      if (id) {
-    fetch(`${API}/student/view/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        const s = result.data || result; // agar response { data: {...} } mein aaye to bhi chale
-
-        setValues({
-          studentName: s.name || "",
-          dataOfBirth: s.dataOfBirth ? String(s.dataOfBirth).split("T")[0] : "",
-          gender: s.gender || "",
-          bloodGroup: s.bloodGroup || "",
-          fatherName: s.fatherName || "",
-          motherName: s.motherName || "",
-          fatherOccupation: s.fatherOccupation || "",
-          motherOccupation: s.motherOccupation || "",
-          parentMobile: s.parentMobile || "",
-          admissionNumber: s.admissionNumber || "",
-          className: s.className?._id || s.className || "",
-          section: s.sectionName?._id || s.sectionName || "",
-          academicYear: normalizeYear(s.academicYear),
-          previousSchool: s.previousSchool || "",
-          studentEmail: s.studentEmail || "",
-          emergencyContact: s.emergencyContact || "",
-          address: s.address || "",
-          city: s.city || "",
-          state: s.state || "",
-          pincode: s.pincode || "",
-          isconfirm: s.isconfirm === true || s.isconfirm === "true",
-        });
-
-        setExistingFiles({
-          StudentPhoto: s.StudentPhoto,
-          birthCertificate: s.birthCertificate,
-          aadhaarCard: s.aadhaarCard,
-          transferCertificate: s.transferCertificate,
-          previousMarksheet: s.previousMarksheet,
-        });
+    if (id) {
+      fetch(`${API}/student/view/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.error("Student fetch error:", error);
-        setMessage({ type: "danger", text: "Student data load nahi ho paya." });
-      });
-  }
-    fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+        .then((res) => res.json())
+        .then((result) => {
+          const s = result.data || result;
+
+          setValues({
+            studentName: s.name || "",
+            dataOfBirth: s.dataOfBirth ? String(s.dataOfBirth).split("T")[0] : "",
+            gender: s.gender || "",
+            bloodGroup: s.bloodGroup || "",
+            fatherName: s.fatherName || "",
+            motherName: s.motherName || "",
+            fatherOccupation: s.fatherOccupation || "",
+            motherOccupation: s.motherOccupation || "",
+            parentMobile: s.parentMobile || "",
+            admissionNumber: s.admissionNumber || "",
+            className: s.className?._id || s.className || "",
+            section: s.sectionName?._id || s.sectionName || "",
+            academicYear: normalizeYear(s.academicYear),
+            previousSchool: s.previousSchool || "",
+            studentEmail: s.studentEmail || "",
+            emergencyContact: s.emergencyContact || "",
+            address: s.address || "",
+            city: s.city || "",
+            state: s.state || "",
+            pincode: s.pincode || "",
+            password: "", // password server se kabhi wapas nahi aata
+            isconfirm: s.isconfirm === true || s.isconfirm === "true",
+          });
+
+          setExistingFiles({
+            StudentPhoto: s.StudentPhoto,
+            birthCertificate: s.birthCertificate,
+            aadhaarCard: s.aadhaarCard,
+            transferCertificate: s.transferCertificate,
+            previousMarksheet: s.previousMarksheet,
+          });
+        })
+        .catch((error) => {
+          console.error("Student fetch error:", error);
+          setMessage({ type: "danger", text: "Student data load nahi ho paya." });
+        });
+    }
+
+    fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setClassData(Array.isArray(result) ? result : []))
       .catch(() => setClassData([]));
 
-    
-fetch("https://school-management-backend-ochre.vercel.app/api/section/")
-  .then((res) => res.json())
-  .then((result) => {
-    setSectionData(
-      Array.isArray(result.data) ? result.data : []
-    );
-  })
-  .catch((error) => {
-    console.error("Section API Error:", error);
-    setSectionData([]);
-  });
+    fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.json())
+      .then((result) => {
+        setSectionData(Array.isArray(result.data) ? result.data : []);
+      })
+      .catch((error) => {
+        console.error("Section API Error:", error);
+        setSectionData([]);
+      });
 
-
-    fetch("https://csc.sidsworld.co.in/api/states/101")
+    fetch("https://csc.sidsworld.co.in/api/states/101", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setStateData(result.states || []))
       .catch(() => setStateData([]));
+    // eslint-disable-next-line
   }, []);
 
   // ---------- handlers ----------
@@ -204,6 +222,14 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
     if (v.pincode.trim() && !pincodeRegex.test(v.pincode.trim()))
       e.pincode = "Pin code must be 6 digits.";
 
+    // Password: add mein required, edit mein optional
+    if (!isEdit) {
+      if (!v.password) e.password = "Please enter a password.";
+      else if (v.password.length < 6) e.password = "Password must be at least 6 characters.";
+    } else if (v.password && v.password.length < 6) {
+      e.password = "Password must be at least 6 characters.";
+    }
+
     const photoErr = validateFile(files.StudentPhoto, { image: true, maxMB: 2 });
     if (photoErr) e.StudentPhoto = photoErr;
     ["birthCertificate", "aadhaarCard", "transferCertificate", "previousMarksheet"].forEach((k) => {
@@ -221,6 +247,7 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
     setValues(initialValues);
     setFiles(initialFiles);
     setErrors({});
+    setShowPassword(false);
     setFileKey((k) => k + 1);
   };
 
@@ -266,38 +293,53 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
     formData.append("pincode", values.pincode.trim());
     formData.append("isconfirm", values.isconfirm);
 
+    // password sirf tab bhejo jab bhara ho (edit mein blank = purana password)
+    if (values.password) formData.append("password", values.password);
+
     // sirf wahi files bhejo jo select hui hain
     Object.entries(files).forEach(([key, file]) => {
       if (file) formData.append(key, file);
     });
 
     try {
-  setLoading(true);
+      setLoading(true);
 
-  // id hai to update API, warna submit API
-  const url = isEdit
-    ? `${API}/student/update/${id}`
-    : `${API}/student/submit`;
-  const method = isEdit ? "PUT" : "POST";
+      // const url = isEdit ? `${API}/student/update/${id}` : `${API}/student/submit`;
+      // const method = isEdit ? "PUT" : "POST";
 
-  const response = await fetch(url, {
-    method,
-    body: formData,
-  });
-  const result = await response.json().catch(() => ({}));
+      // const response = await fetch(url, { method, body: formData });
+      // const result = await response.json().catch(() => ({}));
+      const url = isEdit
+  ? `${API}/student/update/${id}`
+  : `${API}/student/submit`;
 
-  if (response.ok) {
-    setMessage({
-      type: "success",
-      text:
-        result.message ||
-        (isEdit ? "Student updated successfully!" : "Student registered successfully!"),
-    });
-    if (!isEdit) resetForm(); // edit mein form data rehne do
-  } else {
-    setMessage({ type: "danger", text: result.message || "Something went wrong!" });
-  }
-} catch (err) {
+const method = isEdit ? "PUT" : "POST";
+
+
+
+const response = await fetch(url, {
+  method,
+  body: formData,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
+const result = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        setMessage({
+          type: "success",
+          text:
+            result.message ||
+            (isEdit ? "Student updated successfully!" : "Student registered successfully!"),
+        });
+        if (!isEdit) resetForm();
+        else setValues((prev) => ({ ...prev, password: "" })); // edit ke baad password clear
+      } else {
+        setMessage({ type: "danger", text: result.message || "Something went wrong!" });
+      }
+    } catch (err) {
       setMessage({ type: "danger", text: "Server se connect nahi ho pa raha. Please try again." });
     } finally {
       setLoading(false);
@@ -562,11 +604,11 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
                   onChange={handleChange}
                 >
                   <option value="">Select Section</option>
-                   {sectionData.map((section) => (
-    <option key={section._id} value={section._id}>
-      {section.sectionName}
-    </option>
-  ))}
+                  {sectionData.map((section) => (
+                    <option key={section._id} value={section._id}>
+                      {section.sectionName}
+                    </option>
+                  ))}
                 </select>
                 <Err name="section" />
               </div>
@@ -697,8 +739,44 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
 
             <hr className="my-4" />
 
-            {/* 5. Documents */}
-            <div className="section-title">5. Documents</div>
+            {/* 5. Login Information */}
+            <div className="section-title">5. Login Information</div>
+            <div className="row g-3">
+              <div className="col-md-6">
+                <label className="form-label">
+                  Password {!isEdit && <span className="required">*</span>}
+                </label>
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    autoComplete="new-password"
+                    className={cls("password")}
+                    placeholder={
+                      isEdit ? "Leave blank to keep current password" : "Minimum 6 characters"
+                    }
+                    value={values.password}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setShowPassword((s) => !s)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+                <Err name="password" />
+                <div className="form-text">
+                  Login ke liye student ka email ya parent mobile number use hoga.
+                </div>
+              </div>
+            </div>
+
+            <hr className="my-4" />
+
+            {/* 6. Documents */}
+            <div className="section-title">6. Documents</div>
             <p className="text-muted small mb-2">PDF, JPG or PNG — max 5 MB each.</p>
             <div className="row g-3">
               {[
@@ -766,8 +844,10 @@ fetch("https://school-management-backend-ochre.vercel.app/api/section/")
                     ></span>
                     Submitting...
                   </>
+                ) : isEdit ? (
+                  "Update Student"
                 ) : (
-                  (id)?"update Register Student":"Register Student"
+                  "Register Student"
                 )}
               </button>
             </div>

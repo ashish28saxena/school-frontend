@@ -24,7 +24,7 @@ const getPageNumbers = (currentPage, totalPages) => {
 const StudentList = () => {
   const [searchItem, setSearchItem] = useState("");
   const [data, setData] = useState([]);
-
+  const token = localStorage.getItem("token");
   // Pagination states
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
@@ -33,6 +33,9 @@ const StudentList = () => {
   async function deleteStudent(id) {
     await fetch("https://school-management-backend-ochre.vercel.app/api/student/delete/" + id, {
       method: "DELETE",
+      headers: {
+          Authorization: `Bearer ${token}`,
+        },
     })
       .then((response) => response.json())
       .then((result) => console.log(result));
@@ -50,7 +53,11 @@ const StudentList = () => {
   }
 
   function getData() {
-    fetch(`https://school-management-backend-ochre.vercel.app/api/student?offset=${offset}&limit=${limit}`)
+    fetch(`https://school-management-backend-ochre.vercel.app/api/student?offset=${offset}&limit=${limit}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => response.json())
       .then((result) => {
         setData(result.data);

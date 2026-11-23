@@ -11,6 +11,7 @@ const ParentList = () => {
     const dispatch= useDispatch();
     const {depositMoney,withdrawMoney,}=bindActionCreators(actioncreators,dispatch)
     const [amount,setAmount]=useState('')
+     const token = localStorage.getItem("token");
     return (
         <div>
             <h1>This Is parent Component </h1>

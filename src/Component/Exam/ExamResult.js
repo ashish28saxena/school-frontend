@@ -6,7 +6,7 @@ function ExamResult() {
   const [exams, setExams] = useState([]);
   const [classes, setClasses] = useState([]);
   const [sections, setSections] = useState([]);
-
+   const token = localStorage.getItem("token");
   const [filters, setFilters] = useState({
     examId: "",
     classId: "",
@@ -20,9 +20,21 @@ function ExamResult() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${API}/exam/`).then((r) => r.json()),
-      fetch(`${API}/class/`).then((r) => r.json()),
-      fetch(`${API}/section/`).then((r) => r.json()),
+      fetch(`${API}/exam/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((r) => r.json()),
+      fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((r) => r.json()),
+      fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((r) => r.json()),
     ])
       .then(([e, c, s]) => {
         setExams(e.data || []);

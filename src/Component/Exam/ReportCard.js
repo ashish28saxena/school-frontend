@@ -12,7 +12,7 @@ function ReportCard() {
 
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
-
+   const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchReport = async () => {
       try {
@@ -22,7 +22,11 @@ function ReportCard() {
         });
 
         const response = await fetch(
-          `${API}/reportcard/${studentId}?${params.toString()}`
+          `${API}/reportcard/${studentId}?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
         );
 
         const result = await response.json();

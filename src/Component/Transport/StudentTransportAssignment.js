@@ -33,11 +33,12 @@ const StudentTransportAssignment = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url, options = {}) => {
     const response = await fetch(url.startsWith("http") ? url : `${API}${url}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...options.headers,
       },
       ...options,
@@ -56,8 +57,16 @@ const StudentTransportAssignment = () => {
   const loadDropdowns = async () => {
     try {
       const [classRes, routeRes] = await Promise.all([
-        request(CLASS_API),
-        request("/routes"),
+        request(CLASS_API, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        request("/routes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       setClasses(classRes || []);
@@ -75,7 +84,11 @@ const StudentTransportAssignment = () => {
 
     try {
       const result = await request(
-        `${ASSIGN_STUDENT_API}?classId=${selectedClassId}`
+        `${ASSIGN_STUDENT_API}?classId=${selectedClassId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       setStudents(result.data || []);
@@ -88,7 +101,11 @@ const StudentTransportAssignment = () => {
   const fetchAssignments = async () => {
     try {
       setLoading(true);
-      const result = await request("/student-transports");
+      const result = await request("/student-transports", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setAssignments(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -207,6 +224,9 @@ const StudentTransportAssignment = () => {
 
       const result = await request(url, {
         method: editId ? "PUT" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -229,7 +249,11 @@ const StudentTransportAssignment = () => {
     setSuccess("");
 
     try {
-      const result = await request(`/student-transport/${id}`);
+      const result = await request(`/student-transport/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const item = result.data;
 
       if (!item) {
@@ -286,6 +310,9 @@ const StudentTransportAssignment = () => {
     try {
       const result = await request(`/student-transport/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       setSuccess(result.message || "Assignment deleted successfully.");

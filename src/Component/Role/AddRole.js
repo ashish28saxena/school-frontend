@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 const AddRole=()=>{
     const { id } = useParams(); 
     const [role,setRole]=useState('');
+     const token = localStorage.getItem("token");
     useEffect(()=>{
             if(id)
             {
@@ -12,7 +13,11 @@ const AddRole=()=>{
 
     function getData()
     {
-        fetch("https://school-management-backend-ochre.vercel.app/api/role/Edit/"+id)
+        fetch("https://school-management-backend-ochre.vercel.app/api/role/Edit/"+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((responce)=>responce.json())
         .then((result)=>setRole(result.name))
     }
@@ -25,6 +30,7 @@ const AddRole=()=>{
                 method:"put",
                 headers:{
                     "Content-Type":"application/json",
+                    Authorization: `Bearer ${token}`
                 },
                 body:JSON.stringify({
                     rolename:role
@@ -39,6 +45,7 @@ const AddRole=()=>{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body:JSON.stringify({
                     rolename:role

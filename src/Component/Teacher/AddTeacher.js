@@ -24,7 +24,7 @@ const { id } = useParams();
     password:""
   });
   const [message, setMessage] = useState("");
-
+   const token = localStorage.getItem("token");
   const handleChange = (e) => {
 
     const { name, value, type, checked, files } = e.target;
@@ -83,6 +83,9 @@ const { id } = useParams();
         `https://school-management-backend-ochre.vercel.app/api/teacher/update/${id}`,
         {
           method: "PUT",
+          headers: {
+          Authorization: `Bearer ${token}`,
+          },
           body: formData
         }
       );
@@ -92,6 +95,9 @@ const { id } = useParams();
         "https://school-management-backend-ochre.vercel.app/api/teacher/submit",
         {
           method: "POST",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        },
           body: formData
         }
       );
@@ -140,7 +146,11 @@ const { id } = useParams();
   
    async function editData()
    {
-        const response = await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/edit/"+id);
+        const response = await fetch("https://school-management-backend-ochre.vercel.app/api/teacher/edit/"+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         if (!response.ok) throw new Error("Failed to fetch teacher data");
         const result = await response.json();
         const t = result.data;

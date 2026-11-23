@@ -26,9 +26,13 @@ function TransportReports() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url) => {
-    const response = await fetch(`${API}${url}`);
+    const response = await fetch(`${API}${url}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     const result = await response.json();
 
     if (!response.ok) {
@@ -41,8 +45,16 @@ function TransportReports() {
   const loadDropdowns = async () => {
     try {
       const [vehicleResult, routeResult] = await Promise.all([
-        request("/vehicles"),
-        request("/routes"),
+        request("/vehicles", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        request("/routes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       setVehicles(vehicleResult.data || []);
@@ -58,7 +70,11 @@ function TransportReports() {
       setError("");
 
       const result = await request(
-        `/reports/monthly-fees?month=${month}`
+        `/reports/monthly-fees?month=${month}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       setMonthlyFees(result.data || []);
@@ -74,7 +90,11 @@ function TransportReports() {
       setLoading(true);
       setError("");
 
-      const result = await request("/reports/route-students");
+      const result = await request("/reports/route-students", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setRouteStudents(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -99,7 +119,11 @@ function TransportReports() {
         : "";
 
       const result = await request(
-        `/reports/maintenance-expenses${query}`
+        `/reports/maintenance-expenses${query}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       setMaintenance(result.data || []);
@@ -120,7 +144,11 @@ function TransportReports() {
       if (routeId) params.append("routeId", routeId);
 
       const result = await request(
-        `/reports/attendance?${params.toString()}`
+        `/reports/attendance?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       setAttendance(result.data || []);

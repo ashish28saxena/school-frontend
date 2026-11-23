@@ -17,7 +17,7 @@ function ExamMaster() {
   const [exams, setExams] = useState([]);
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetchExams();
   }, []);
@@ -25,7 +25,11 @@ function ExamMaster() {
   // Fetch exam list
   const fetchExams = async () => {
     try {
-      const response = await fetch(API);
+      const response = await fetch(API, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setExams(result.data || []);
     } catch (error) {
@@ -61,6 +65,7 @@ function ExamMaster() {
           method: editId ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(form),
         }
@@ -114,6 +119,9 @@ function ExamMaster() {
     try {
       const response = await fetch(`${API}/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const result = await response.json();

@@ -11,16 +11,25 @@ const AddUser=()=>{
     const [selectRole,setSelectRole]=useState('')
     const [statusList,setStatusList]=useState(["Active","Inactive"]);
     const [status,setStatus]=useState('');
+     const token = localStorage.getItem("token");
     function getRoleData()
     {
-       fetch("https://school-management-backend-ochre.vercel.app/api/role")
+       fetch("https://school-management-backend-ochre.vercel.app/api/role", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
        .then((responce)=>responce.json())
        .then((reslt)=>setRole(reslt))
     }
 
     function getEditUser() 
     {
-        fetch("https://school-management-backend-ochre.vercel.app/api/user/userEdit/"+id)
+        fetch("https://school-management-backend-ochre.vercel.app/api/user/userEdit/"+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((responce)=>responce.json())
         .then((result)=>{
             console.log("ashish",result.name)
@@ -39,7 +48,8 @@ const AddUser=()=>{
                 fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit/"+id,{
             method:"PUT",
             headers:{
-                "Content-type":"application/json"
+                "Content-type":"application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 name:name,
@@ -56,7 +66,8 @@ const AddUser=()=>{
                 fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit",{
             method:"POST",
             headers:{
-                "Content-type":"application/json"
+                "Content-type":"application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 name:name,

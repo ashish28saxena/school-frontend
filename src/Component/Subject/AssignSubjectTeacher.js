@@ -5,8 +5,13 @@ const AssignSubjectTeacher=()=>{
 const [classData,setClassData]=useState([])
 const [subjects, setSubjects] = useState([]);
 const [message, setMessage] = useState("");
+ const token = localStorage.getItem("token");
       async function getClassdata() {
-    await fetch("https://school-management-backend-ochre.vercel.app/api/class/")
+    await fetch("https://school-management-backend-ochre.vercel.app/api/class/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((result) => setClassData(result))
         .catch((error) => console.log(error));
@@ -14,7 +19,11 @@ const [message, setMessage] = useState("");
 
   async function getSubjectData()
   {
-      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject");
+      const response = await fetch("https://school-management-backend-ochre.vercel.app/api/subject", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         const result = await response.json();
 
         setSubjects(result.data || []);

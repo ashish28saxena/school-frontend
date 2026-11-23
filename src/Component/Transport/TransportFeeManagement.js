@@ -48,11 +48,12 @@ const TransportFeeManagement = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url, options = {}) => {
     const response = await fetch(`${API}${url}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...options.headers,
       },
       ...options,
@@ -70,7 +71,11 @@ const TransportFeeManagement = () => {
   // Load active student transport assignments
   const fetchAssignments = async () => {
     try {
-      const result = await request("/student-transports");
+      const result = await request("/student-transports", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setAssignments(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -80,7 +85,11 @@ const TransportFeeManagement = () => {
   // Load all generated invoices
   const fetchFees = async () => {
     try {
-      const result = await request("/fees");
+      const result = await request("/fees", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setFees(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -90,7 +99,11 @@ const TransportFeeManagement = () => {
   // Load pending and partial fees
   const fetchPendingFees = async () => {
     try {
-      const result = await request("/fees/pending");
+      const result = await request("/fees/pending", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setPendingFees(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -100,7 +113,11 @@ const TransportFeeManagement = () => {
   // Load payment history
   const fetchPayments = async () => {
     try {
-      const result = await request("/fee-payments");
+      const result = await request("/fee-payments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setPayments(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -158,6 +175,9 @@ const TransportFeeManagement = () => {
     try {
       const result = await request("/fee/generate", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(generateForm),
       });
 
@@ -223,6 +243,9 @@ const TransportFeeManagement = () => {
     try {
       const result = await request("/fee/collect", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           transportFeeId: selectedFee._id,
           amountPaid: amount,

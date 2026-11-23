@@ -17,11 +17,16 @@ function SubjectManagement() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+   const token = localStorage.getItem("token");
 
   // Fetch all subjects
   const fetchSubjects = async () => {
     try {
-      const response = await fetch(`${API}/`);
+      const response = await fetch(`${API}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -66,6 +71,7 @@ function SubjectManagement() {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });
@@ -115,6 +121,9 @@ function SubjectManagement() {
     try {
       const response = await fetch(`${API}/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       const result = await response.json();

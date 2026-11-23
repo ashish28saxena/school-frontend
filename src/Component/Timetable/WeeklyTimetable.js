@@ -25,6 +25,7 @@ function WeeklyTimetable() {
 
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchDropdowns();
@@ -33,8 +34,16 @@ function WeeklyTimetable() {
   const fetchDropdowns = async () => {
     try {
       const [classRes, sectionRes] = await Promise.all([
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       const classData = await classRes.json();
@@ -84,7 +93,11 @@ function WeeklyTimetable() {
       });
 
       const response = await fetch(
-        `${API}/timetable/filter?${query.toString()}`
+        `${API}/timetable/filter?${query.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();

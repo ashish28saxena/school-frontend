@@ -61,12 +61,13 @@ function VehicleMaintenance() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url, options = {}) => {
     const response = await fetch(`${API}${url}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...(options.headers || {}),
       },
     });
@@ -84,7 +85,11 @@ function VehicleMaintenance() {
 
   const fetchVehicles = async () => {
     try {
-      const result = await request("/vehicles");
+      const result = await request("/vehicles", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setVehicles(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -109,7 +114,11 @@ function VehicleMaintenance() {
         ? `?${params.toString()}`
         : "";
 
-      const result = await request(`/maintenances${query}`);
+      const result = await request(`/maintenances${query}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setRecords(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -120,7 +129,11 @@ function VehicleMaintenance() {
 
   const fetchReminders = async () => {
     try {
-      const result = await request("/maintenance/reminders");
+      const result = await request("/maintenance/reminders", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setReminders(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -181,6 +194,9 @@ function VehicleMaintenance() {
 
       await request(url, {
         method,
+         headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -208,7 +224,11 @@ function VehicleMaintenance() {
     try {
       setError("");
 
-      const result = await request(`/maintenance/${id}`);
+      const result = await request(`/maintenance/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const item = result.data;
 
       setForm({
@@ -240,7 +260,11 @@ function VehicleMaintenance() {
     try {
       setError("");
 
-      const result = await request(`/maintenance/${id}`);
+      const result = await request(`/maintenance/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setViewRecord(result.data);
     } catch (err) {
       setError(err.message);
@@ -259,6 +283,9 @@ function VehicleMaintenance() {
     try {
       await request(`/maintenance/delete/${id}`, {
         method: "DELETE",
+         headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       alert("Maintenance record deleted successfully");

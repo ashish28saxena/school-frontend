@@ -9,6 +9,7 @@ function FeeDiscount() {
   const [students, setStudents] = useState([]);
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(null);
+   const token = localStorage.getItem("token");
 
   const [filters, setFilters] = useState({
     classId: "",
@@ -32,8 +33,16 @@ function FeeDiscount() {
 
   const loadOptions = async () => {
     const [c, s] = await Promise.all([
-      fetch(`${API}/class/`),
-      fetch(`${API}/section/`),
+      fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
     ]);
     const cd = await c.json();
     const sd = await s.json();
@@ -42,7 +51,11 @@ function FeeDiscount() {
   };
 
   const loadDiscounts = async () => {
-    const response = await fetch(`${API}/feediscount/`);
+    const response = await fetch(`${API}/feediscount/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     const result = await response.json();
     setList(result.data || []);
   };
@@ -67,7 +80,11 @@ function FeeDiscount() {
     }
 
     const response = await fetch(
-      `${API}/feecollection/students?${params}`
+      `${API}/feecollection/students?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     const result = await response.json();
 
@@ -144,7 +161,7 @@ function FeeDiscount() {
 
       const response = await fetch(url, {
         method: editId ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 
@@ -189,6 +206,9 @@ function FeeDiscount() {
 
     const response = await fetch(`${API}/feediscount/delete/${id}`, {
       method: "DELETE",
+       headers: {
+          Authorization: `Bearer ${token}`,
+        },
     });
     const result = await response.json();
     alert(result.message);

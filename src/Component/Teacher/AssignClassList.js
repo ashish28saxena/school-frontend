@@ -28,12 +28,16 @@ const AssignClassList = () => {
   const [pageSize, setPageSize] = useState(10);
 
   const offset = (currentPage - 1) * pageSize;
-
+   const token = localStorage.getItem("token");
   // Dropdown options (ek baar)
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API}/api/assignclass/filter-options`);
+        const res = await fetch(`${API}/api/assignclass/filter-options`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         const result = await res.json();
         setOptions({
           classes: result.classes || [],
@@ -66,7 +70,11 @@ const AssignClassList = () => {
         if (value) params.append(key, value);
       });
 
-      const response = await fetch(`${API}/api/assignclass?${params}`);
+      const response = await fetch(`${API}/api/assignclass?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       setAssignSubjectData(result.data || []);
@@ -94,7 +102,11 @@ const AssignClassList = () => {
     try {
       const response = await fetch(
         `${API}/api/assignclass/delete/${item._id}`,
-        { method: "DELETE" }
+        { method: "DELETE" ,
+           headers: {
+          Authorization: `Bearer ${token}`,
+        }
+        }
       );
       const result = await response.json();
 

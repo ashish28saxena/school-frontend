@@ -28,7 +28,7 @@ export default function FeeInstallment() {
   const [sections, setSections] = useState([]);
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);
-
+   const token = localStorage.getItem("token");
   const [form, setForm] = useState({
     assignStudentId: "",
     numberOfInstallments: 3,
@@ -57,8 +57,16 @@ export default function FeeInstallment() {
   async function fetchOptions() {
     try {
       const [classRes, sectionRes] = await Promise.all([
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       const classJson = await classRes.json();
@@ -90,7 +98,11 @@ export default function FeeInstallment() {
       }
 
       const response = await fetch(
-        `${API}/feecollection/students?${params.toString()}`
+        `${API}/feecollection/students?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();
@@ -119,7 +131,11 @@ export default function FeeInstallment() {
       if (filters.sectionId) params.set("sectionId", filters.sectionId);
 
       const response = await fetch(
-        `${API}/feeinstallment/?${params.toString()}`
+        `${API}/feeinstallment/?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       const result = await response.json();
 
@@ -164,7 +180,7 @@ export default function FeeInstallment() {
 
       const response = await fetch(`${API}/feeinstallment/submit`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(form),
       });
 
@@ -222,7 +238,7 @@ export default function FeeInstallment() {
         `${API}/feeinstallment/${payment.planId}/pay/${payment.installmentId}`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({
             amountPaid: Number(payment.amountPaid),
             paymentDate: payment.paymentDate,
@@ -269,6 +285,9 @@ export default function FeeInstallment() {
     try {
       const response = await fetch(`${API}/feeinstallment/delete/${id}`, {
         method: "DELETE",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       const result = await response.json();

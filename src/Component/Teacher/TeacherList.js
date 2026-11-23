@@ -8,9 +8,13 @@ const TeacherList = () => {
   const [teacherData, setTeacherData] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-
+   const token = localStorage.getItem("token");
   async function getTeacherData() {
-    const response = await fetch(`${API}/api/teacher/`);
+    const response = await fetch(`${API}/api/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     const result = await response.json();
     setTeacherData(result.data || []);
   }
@@ -29,6 +33,9 @@ const TeacherList = () => {
     if (!window.confirm(`Delete ${item.firstName}? This can't be undone.`)) return;
     const response = await fetch(`${API}/api/teacher/delete/${item._id}`, {
       method: "DELETE",
+      headers: {
+          Authorization: `Bearer ${token}`,
+        }
     });
     const result = await response.json();
     if (result) getTeacherData();

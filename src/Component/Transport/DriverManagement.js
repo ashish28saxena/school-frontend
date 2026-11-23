@@ -23,14 +23,18 @@ const DriverManagement = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const token = localStorage.getItem("token");
   // Fetch Drivers
   const fetchDrivers = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${API}/drivers`);
+      const response = await fetch(`${API}/drivers`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -82,6 +86,7 @@ const DriverManagement = () => {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });
@@ -108,7 +113,11 @@ const DriverManagement = () => {
       setError("");
       setSuccess("");
 
-      const response = await fetch(`${API}/driver/${id}`);
+      const response = await fetch(`${API}/driver/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -157,6 +166,9 @@ const DriverManagement = () => {
 
       const response = await fetch(`${API}/driver/delete/${id}`, {
         method: "DELETE",
+         headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       const result = await response.json();

@@ -5,9 +5,14 @@ import { useParams } from "react-router-dom";
  const Profile=()=>{
     const { id } = useParams();
       const [teacherdata,setData]=useState([])
+       const token = localStorage.getItem("token");
       async function getTeacherDetail()
       {
-                    await fetch( `https://school-management-backend-ochre.vercel.app/api/teacher/edit/${id}`)
+                    await fetch( `https://school-management-backend-ochre.vercel.app/api/teacher/edit/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
                     .then((response)=>response.json())
                     .then((result)=>setData(result.data))
       }

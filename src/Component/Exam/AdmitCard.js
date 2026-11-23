@@ -16,17 +16,30 @@ function AdmitCard() {
   const [students, setStudents] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(false);
+   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`${API}/exam/`)
+    fetch(`${API}/exam/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setExams(result.data || []));
 
-    fetch(`${API}/class/`)
+    fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setClasses(result || []));
 
-    fetch(`${API}/section/`)
+    fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((result) => setSections(result.data || []));
   }, []);
@@ -46,7 +59,11 @@ function AdmitCard() {
       setLoading(true);
 
       const response = await fetch(
-        `${API}/admitcard/data?examId=${examId}&classId=${classId}&sectionId=${sectionId}`
+        `${API}/admitcard/data?examId=${examId}&classId=${classId}&sectionId=${sectionId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();

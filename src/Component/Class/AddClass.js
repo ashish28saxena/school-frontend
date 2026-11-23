@@ -8,6 +8,7 @@ const AddClass = () => {
   const [className, setClassName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+   const token = localStorage.getItem("token");
 
   function submitData() {
     if (!className.trim()) {
@@ -25,6 +26,7 @@ const AddClass = () => {
       method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ className: className.trim() }),
     })
@@ -50,7 +52,11 @@ const AddClass = () => {
   }
 
   function getEditClassData() {
-    fetch(`${API_BASE}/edit/${id}`)
+    fetch(`${API_BASE}/edit/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => response.json())
       .then((result) => {
         setClassName(result.className);

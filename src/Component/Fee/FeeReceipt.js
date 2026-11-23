@@ -7,14 +7,18 @@ function FeeReceipt() {
   const [receipts, setReceipts] = useState([]);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(null);
-
+ const token = localStorage.getItem("token");
   const loadReceipts = async (receiptNumber = "") => {
     try {
       const params = new URLSearchParams();
       if (receiptNumber) params.append("receiptNumber", receiptNumber);
 
       const response = await fetch(
-        `${API}/feereceipt/?${params.toString()}`
+        `${API}/feereceipt/?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       const result = await response.json();
 
@@ -47,7 +51,11 @@ function FeeReceipt() {
   const openReceipt = async (receiptNumber) => {
     try {
       const response = await fetch(
-        `${API}/feereceipt/${encodeURIComponent(receiptNumber)}`
+        `${API}/feereceipt/${encodeURIComponent(receiptNumber)}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       const result = await response.json();
 

@@ -39,7 +39,7 @@ const Salary = () => {
   const [message, setMessage] = useState("");
   const [editId, setEditId] = useState(null); // null = add mode, id = edit mode
   const formRef = useRef(null);
-
+   const token = localStorage.getItem("token");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -65,7 +65,11 @@ const Salary = () => {
 
   async function getTeacher() {
     try {
-      const response = await fetch(`${API}/api/teacher/`);
+      const response = await fetch(`${API}/api/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setTeacherData(result.data || []);
     } catch (err) {
@@ -75,7 +79,11 @@ const Salary = () => {
 
   async function getSalaryData() {
     try {
-      const response = await fetch(`${API}/api/teachersalary/get`);
+      const response = await fetch(`${API}/api/teachersalary/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setSalaryList(result.data || []);
     } catch (err) {
@@ -127,6 +135,9 @@ const Salary = () => {
     try {
       const response = await fetch(`${API}/api/teachersalary/delete/${id}`, {
         method: "DELETE",
+         headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
       const result = await response.json();
 
@@ -156,7 +167,7 @@ const Salary = () => {
     try {
       const response = await fetch(url, {
         method: isEdit ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",Authorization: `Bearer ${token}` },
         body: JSON.stringify(form),
       });
 

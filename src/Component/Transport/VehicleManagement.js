@@ -23,13 +23,17 @@ const VehicleManagement = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   const fetchVehicles = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${API}/vehicles`);
+      const response = await fetch(`${API}/vehicles`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -78,6 +82,7 @@ const VehicleManagement = () => {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...form,
@@ -106,7 +111,11 @@ const VehicleManagement = () => {
       setError("");
       setSuccess("");
 
-      const response = await fetch(`${API}/vehicle/${id}`);
+      const response = await fetch(`${API}/vehicle/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -156,6 +165,9 @@ const VehicleManagement = () => {
 
       const response = await fetch(`${API}/vehicle/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       const result = await response.json();

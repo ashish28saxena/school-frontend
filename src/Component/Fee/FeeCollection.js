@@ -23,6 +23,7 @@ function FeeCollection() {
   const [payments, setPayments] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [loading, setLoading] = useState(false);
+   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchOptions();
@@ -32,8 +33,16 @@ function FeeCollection() {
   const fetchOptions = async () => {
     try {
       const [classRes, sectionRes] = await Promise.all([
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       const classData = await classRes.json();
@@ -48,7 +57,11 @@ function FeeCollection() {
 
   const fetchPayments = async () => {
     try {
-      const response = await fetch(`${API}/feecollection/`);
+      const response = await fetch(`${API}/feecollection/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setPayments(result.data || []);
     } catch (error) {
@@ -88,7 +101,11 @@ function FeeCollection() {
       }
 
       const response = await fetch(
-        `${API}/feecollection/students?${params.toString()}`
+        `${API}/feecollection/students?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();
@@ -172,7 +189,7 @@ function FeeCollection() {
 
       const response = await fetch(`${API}/feecollection/submit`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 
@@ -212,7 +229,11 @@ function FeeCollection() {
     try {
       const response = await fetch(
         `${API}/feecollection/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+            headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
 
       const result = await response.json();

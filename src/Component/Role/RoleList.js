@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 const RoleList=()=>{
     const [data,setData]=useState([])
     const [searchTerm,setSearchTerm]=useState("")
-    
+     const token = localStorage.getItem("token");
     function getData()
     {
-         fetch("https://school-management-backend-ochre.vercel.app/api/role")
+         fetch("https://school-management-backend-ochre.vercel.app/api/role", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
            .then((result)=>result.json())
          .then((responce)=>setData(responce))
          console.log("***"+data)
@@ -17,7 +21,10 @@ const RoleList=()=>{
     function deleteRole(index)
     {
         let result=fetch("https://school-management-backend-ochre.vercel.app/api/role/delete/"+index,{
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       })
 
       .then((responce)=>responce.json());
@@ -27,7 +34,11 @@ const RoleList=()=>{
 
     function filterData()
     {
-         fetch("https://school-management-backend-ochre.vercel.app/api/role/search?q="+searchTerm)
+         fetch("https://school-management-backend-ochre.vercel.app/api/role/search?q="+searchTerm, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
            .then((result)=>result.json())
          .then((responce)=>setData(responce))
     }

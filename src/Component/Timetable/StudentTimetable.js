@@ -16,6 +16,7 @@ function StudentTimetable() {
   const [studentAssignment, setStudentAssignment] = useState(null);
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
+   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchStudents();
@@ -23,7 +24,11 @@ function StudentTimetable() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${API}/student/`);
+      const response = await fetch(`${API}/student/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setStudents(result.data || []);
     } catch (error) {
@@ -53,7 +58,11 @@ function StudentTimetable() {
       setLoading(true);
 
       const response = await fetch(
-        `${API}/timetable/student/${studentId}?academicYear=${academicYear}`
+        `${API}/timetable/student/${studentId}?academicYear=${academicYear}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
 
       const result = await response.json();

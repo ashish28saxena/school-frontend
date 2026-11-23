@@ -7,13 +7,17 @@ const TransportDashboard = () => {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+   const token = localStorage.getItem("token");
   const fetchDashboard = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${API}/dashboard`);
+      const response = await fetch(`${API}/dashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {

@@ -40,7 +40,7 @@ function TimetableManagement() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [viewData, setViewData] = useState(null);
-
+   const token = localStorage.getItem("token");
   useEffect(() => {
     fetchDropdowns();
     fetchTimetables();
@@ -53,10 +53,26 @@ function TimetableManagement() {
   const fetchDropdowns = async () => {
     try {
       const responses = await Promise.all([
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
-        fetch(`${API}/subject/`),
-        fetch(`${API}/teacher/`),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/subject/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/teacher/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       const data = await Promise.all(
@@ -74,7 +90,11 @@ function TimetableManagement() {
 
   const fetchTimetables = async () => {
     try {
-      const response = await fetch(`${API}/timetable/`);
+      const response = await fetch(`${API}/timetable/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setTimetables(result.data || []);
     } catch (error) {
@@ -170,6 +190,7 @@ function TimetableManagement() {
           method: editId ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify(payload),
         }
@@ -224,7 +245,11 @@ function TimetableManagement() {
     try {
       const response = await fetch(
         `${API}/timetable/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
 
       const result = await response.json();

@@ -23,14 +23,18 @@ const RouteManagement = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   // Fetch Routes
   const fetchRoutes = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${API}/routes`);
+      const response = await fetch(`${API}/routes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -133,6 +137,7 @@ const RouteManagement = () => {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
@@ -159,7 +164,11 @@ const RouteManagement = () => {
       setError("");
       setSuccess("");
 
-      const response = await fetch(`${API}/route/${id}`);
+      const response = await fetch(`${API}/route/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -208,6 +217,9 @@ const RouteManagement = () => {
 
       const response = await fetch(`${API}/route/delete/${id}`, {
         method: "DELETE",
+         headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       const result = await response.json();

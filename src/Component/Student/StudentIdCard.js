@@ -42,6 +42,7 @@ function StudentCard({ item }) {
     admissionNumber: student.admissionNumber || "",
     academicYear: item.academicYear,
   });
+   const token = localStorage.getItem("token");
 
   return (
     <div className="student-id-card">

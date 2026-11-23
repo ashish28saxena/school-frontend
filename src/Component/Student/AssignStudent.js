@@ -23,7 +23,7 @@ function AssignStudent() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+   const token = localStorage.getItem("token");
   // API response se data array nikalna
   const getData = (response) => {
     return Array.isArray(response.data)
@@ -36,10 +36,26 @@ function AssignStudent() {
     try {
       const [studentRes, classRes, sectionRes, assignRes] =
         await Promise.all([
-          fetch(`${API}/student/`),
-          fetch(`${API}/Class/`),
-          fetch(`${API}/section/`),
-          fetch(`${API}/assignstudent/`),
+          fetch(`${API}/student/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${API}/Class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${API}/assignstudent/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
         ]);
 
       if (
@@ -116,6 +132,7 @@ function AssignStudent() {
         method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });
@@ -162,7 +179,11 @@ function AssignStudent() {
     try {
       const response = await fetch(
         `${API}/assignstudent/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
 
       const result = await response.json();

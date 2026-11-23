@@ -28,11 +28,12 @@ const RouteAssignment = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+   const token = localStorage.getItem("token");
   const request = async (url, options = {}) => {
     const response = await fetch(`${API}${url}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...options.headers,
       },
       ...options,
@@ -50,9 +51,21 @@ const RouteAssignment = () => {
   const loadDropdowns = async () => {
     try {
       const [vehicleRes, driverRes, routeRes] = await Promise.all([
-        request("/vehicles"),
-        request("/drivers"),
-        request("/routes"),
+        request("/vehicles", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        request("/drivers", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        request("/routes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       setVehicles(vehicleRes.data || []);
@@ -66,7 +79,11 @@ const RouteAssignment = () => {
   const fetchAssignments = async () => {
     try {
       setLoading(true);
-      const result = await request("/assignments");
+      const result = await request("/assignments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setAssignments(result.data || []);
     } catch (err) {
       setError(err.message);
@@ -125,6 +142,9 @@ const RouteAssignment = () => {
 
       const result = await request(url, {
         method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(form),
       });
 
@@ -147,7 +167,11 @@ const RouteAssignment = () => {
     setSuccess("");
 
     try {
-      const result = await request(`/assignment/${id}`);
+      const result = await request(`/assignment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const item = result.data;
 
       if (!item) {
@@ -184,6 +208,9 @@ const RouteAssignment = () => {
     try {
       const result = await request(`/assignment/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       setSuccess(result.message || "Assignment deleted successfully.");

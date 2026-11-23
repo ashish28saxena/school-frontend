@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 const UserList=()=>{
     const [data,setData]=useState([])
     const [searchTerm,setSearchTerm]=useState("")
+     const token = localStorage.getItem("token");
     function getData() {
-  fetch("https://school-management-backend-ochre.vercel.app/api/user/userList")
+  fetch("https://school-management-backend-ochre.vercel.app/api/user/userList", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     .then((res) => res.json())
     .then((result) => {
       setData(result);
@@ -22,7 +27,8 @@ function changeSatus(item)
        fetch("https://school-management-backend-ochre.vercel.app/api/user/userSubmit/"+item._id,{
             method:"PUT",
             headers:{
-                "Content-type":"application/json"
+                "Content-type":"application/json",
+                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 
@@ -37,7 +43,10 @@ function changeSatus(item)
 function deleteUser(index)
 {
      fetch("https://school-management-backend-ochre.vercel.app/api/user/userDelete/"+index,{
-      method:"DELETE"
+      method:"DELETE",
+       headers: {
+          Authorization: `Bearer ${token}`,
+        },
      })
      .then((res)=>res.json())
      getData();

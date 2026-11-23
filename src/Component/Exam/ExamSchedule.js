@@ -28,6 +28,7 @@ function ExamSchedule() {
 
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
+   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchDropdownData();
@@ -39,10 +40,26 @@ function ExamSchedule() {
     try {
       const [examRes, classRes, sectionRes, subjectRes] =
         await Promise.all([
-          fetch(`${BASE_URL}/exam/`),
-          fetch(`${BASE_URL}/class/`),
-          fetch(`${BASE_URL}/section/`),
-          fetch(`${BASE_URL}/subject/`),
+          fetch(`${BASE_URL}/exam/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${BASE_URL}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${BASE_URL}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+          fetch(`${BASE_URL}/subject/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
         ]);
 
       const [examData, classData, sectionData, subjectData] =
@@ -65,7 +82,11 @@ function ExamSchedule() {
   // Fetch schedules
   const fetchSchedules = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/examschedule/`);
+      const response = await fetch(`${BASE_URL}/examschedule/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setSchedules(result.data || []);
     } catch (error) {
@@ -145,6 +166,7 @@ function ExamSchedule() {
           method: editId ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(payload),
         }
@@ -202,7 +224,11 @@ function ExamSchedule() {
     try {
       const response = await fetch(
         `${BASE_URL}/examschedule/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+          headers: {
+          Authorization: `Bearer ${token}`,
+        },
+         }
       );
 
       const result = await response.json();

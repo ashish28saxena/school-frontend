@@ -15,10 +15,17 @@ const Section = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Get Section List
+  const token = localStorage.getItem("token");
+
+  // GET SECTION LIST
   const getSectionList = async () => {
     try {
-      const res = await axios.get(`${API}/`);
+      const res = await axios.get(`${API}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       setSectionList(
         Array.isArray(res.data)
           ? res.data
@@ -34,7 +41,7 @@ const Section = () => {
     getSectionList();
   }, []);
 
-  // Handle Input
+  // HANDLE INPUT
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -44,7 +51,7 @@ const Section = () => {
     });
   };
 
-  // Add / Update Section
+  // ADD / UPDATE SECTION
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,10 +64,30 @@ const Section = () => {
       setLoading(true);
 
       if (id) {
-        await axios.put(`${API}/update/${id}`, form);
+        // PUT - UPDATE
+        await axios.put(
+          `${API}/update/${id}`,
+          form,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         alert("Section updated successfully");
       } else {
-        await axios.post(`${API}/submit`, form);
+        // POST - ADD
+        await axios.post(
+          `${API}/submit`,
+          form,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         alert("Section added successfully");
       }
 
@@ -68,13 +95,16 @@ const Section = () => {
       getSectionList();
 
     } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
+      alert(
+        error.response?.data?.message ||
+        "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  // Edit Section
+  // EDIT SECTION
   const editSection = (item) => {
     setId(item._id);
 
@@ -83,34 +113,55 @@ const Section = () => {
       status: item.status ?? true,
     });
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  // Delete Section
+  // DELETE SECTION
   const deleteSection = async (item) => {
-    if (!window.confirm(
-      `Are you sure you want to delete section ${item.sectionName}?`
-    )) return;
+    if (
+      !window.confirm(
+        `Are you sure you want to delete section ${item.sectionName}?`
+      )
+    ) {
+      return;
+    }
 
     try {
-      await axios.delete(`${API}/delete/${item._id}`);
+      // DELETE
+      await axios.delete(
+        `${API}/delete/${item._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       alert("Section deleted successfully");
       getSectionList();
+
     } catch (error) {
-      alert(error.response?.data?.message || "Delete failed");
+      alert(
+        error.response?.data?.message ||
+        "Delete failed"
+      );
     }
   };
 
-  // Reset Form
+  // RESET FORM
   const resetForm = () => {
     setId(null);
+
     setForm({
       sectionName: "",
       status: true,
     });
   };
 
-  // Search
+  // SEARCH
   const filteredSections = sectionList.filter((item) =>
     item.sectionName?.toLowerCase().includes(search.toLowerCase())
   );
@@ -118,10 +169,13 @@ const Section = () => {
   return (
     <div className="container-fluid py-4">
 
-      {/* Page Heading */}
+      {/* PAGE HEADING */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <h3 className="fw-bold mb-1">Section Management</h3>
+          <h3 className="fw-bold mb-1">
+            Section Management
+          </h3>
+
           <p className="text-muted mb-0">
             Manage school sections
           </p>
@@ -132,7 +186,7 @@ const Section = () => {
         </span>
       </div>
 
-      {/* Add Section Form */}
+      {/* ADD SECTION FORM */}
       <div className="card shadow-sm border-0 mb-4">
         <div className="card-header bg-white py-3">
           <h5 className="mb-0 fw-bold">
@@ -173,6 +227,7 @@ const Section = () => {
                     checked={form.status}
                     onChange={handleChange}
                   />
+
                   <label className="form-check-label">
                     {form.status ? "Active" : "Inactive"}
                   </label>
@@ -208,13 +263,16 @@ const Section = () => {
         </div>
       </div>
 
-      {/* Section List */}
+      {/* SECTION LIST */}
       <div className="card shadow-sm border-0">
 
         <div className="card-header bg-white py-3">
           <div className="row align-items-center">
+
             <div className="col-md-6">
-              <h5 className="mb-0 fw-bold">Section List</h5>
+              <h5 className="mb-0 fw-bold">
+                Section List
+              </h5>
             </div>
 
             <div className="col-md-6 mt-2 mt-md-0">
@@ -226,6 +284,7 @@ const Section = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
+
           </div>
         </div>
 
@@ -246,6 +305,7 @@ const Section = () => {
                 {filteredSections.length > 0 ? (
                   filteredSections.map((item, index) => (
                     <tr key={item._id}>
+
                       <td>{index + 1}</td>
 
                       <td className="fw-semibold">
@@ -260,7 +320,9 @@ const Section = () => {
                               : "bg-secondary"
                           }`}
                         >
-                          {item.status ? "Active" : "Inactive"}
+                          {item.status
+                            ? "Active"
+                            : "Inactive"}
                         </span>
                       </td>
 
@@ -269,21 +331,27 @@ const Section = () => {
                           className="btn btn-sm btn-outline-primary me-2"
                           onClick={() => editSection(item)}
                         >
-                          <i className="bi bi-pencil-square"></i> Edit
+                          <i className="bi bi-pencil-square"></i>{" "}
+                          Edit
                         </button>
 
                         <button
                           className="btn btn-sm btn-outline-danger"
                           onClick={() => deleteSection(item)}
                         >
-                          <i className="bi bi-trash"></i> Delete
+                          <i className="bi bi-trash"></i>{" "}
+                          Delete
                         </button>
                       </td>
+
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="text-center py-4 text-muted">
+                    <td
+                      colSpan="4"
+                      className="text-center py-4 text-muted"
+                    >
                       No sections found
                     </td>
                   </tr>

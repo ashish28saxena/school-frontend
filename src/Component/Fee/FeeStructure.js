@@ -22,7 +22,7 @@ function FeeStructure() {
   const [sections, setSections] = useState([]);
   const [feeList, setFeeList] = useState([]);
   const [editId, setEditId] = useState(null);
-
+   const token = localStorage.getItem("token");
   useEffect(() => {
     fetchOptions();
     fetchFeeStructures();
@@ -31,8 +31,16 @@ function FeeStructure() {
   const fetchOptions = async () => {
     try {
       const [classRes, sectionRes] = await Promise.all([
-        fetch(`${API}/class/`),
-        fetch(`${API}/section/`),
+        fetch(`${API}/class/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+        fetch(`${API}/section/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       ]);
 
       const classData = await classRes.json();
@@ -47,7 +55,11 @@ function FeeStructure() {
 
   const fetchFeeStructures = async () => {
     try {
-      const response = await fetch(`${API}/feestructure/`);
+      const response = await fetch(`${API}/feestructure/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       setFeeList(result.data || []);
     } catch (error) {
@@ -137,7 +149,7 @@ function FeeStructure() {
 
       const response = await fetch(url, {
         method: editId ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 
@@ -180,7 +192,11 @@ function FeeStructure() {
     try {
       const response = await fetch(
         `${API}/feestructure/delete/${id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+           headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
 
       const result = await response.json();

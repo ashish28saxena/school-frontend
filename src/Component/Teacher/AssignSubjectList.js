@@ -26,14 +26,18 @@ const AssignSubjectList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
+   const token = localStorage.getItem("token");
   const offset = (currentPage - 1) * pageSize;
-
+  
   // Dropdown options (ek baar)
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API}/api/assignsubject/filter-options`);
+        const res = await fetch(`${API}/api/assignsubject/filter-options`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         const result = await res.json();
         setOptions({
           classes: result.classes || [],
@@ -66,7 +70,11 @@ const AssignSubjectList = () => {
         if (value) params.append(key, value);
       });
 
-      const response = await fetch(`${API}/api/assignsubject?${params}`);
+      const response = await fetch(`${API}/api/assignsubject?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
 
       setAssignSubjectData(result.data || []);
@@ -94,7 +102,11 @@ const AssignSubjectList = () => {
     try {
       const response = await fetch(
         `${API}/api/assignsubject/delete/${item._id}`,
-        { method: "DELETE" }
+        { method: "DELETE",
+           headers: {
+          Authorization: `Bearer ${token}`,
+        }
+         }
       );
       const result = await response.json();
 
