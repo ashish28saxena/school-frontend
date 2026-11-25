@@ -8,14 +8,7 @@ import "./Header.css";
    JSX/CSS ko chhoone ki zarurat nahi.
 ------------------------------------------------------------------- */
 const MENU = [
-  {
-    id: "attendance",
-    label: "Attendance",
-    items: [
-      { label: "Take Attendance", to: "/Attenddence-list" },
-      { label: "Attendance Report", to: "/Attenddence-student-list" },
-    ],
-  },
+  
   {
     id: "people",
     label: "Student / Teacher Management",
@@ -114,6 +107,45 @@ const MENU = [
     label: "Parent Management",
     items: [{ label: "Parent Management", to: "/parent" }],
   },
+  {
+    id: "Student_Promotion",
+    label: "Student Promotion",
+    items: [{ label: "Student Promotion", to: "/student-promotion" }],
+  },
+  {
+    id: "LeaveManagement",
+    label: "Leave Management",
+    items: [{ label: "Leave Management", to: "/leave-management" },
+      { label: "Leave Type", to: "/leave-type" },
+       { label: "Leave Balance", to: "/leave-balance" },
+       { label: "Leave Calendar", to: "/leave-calendar" },
+       { label: "Leave Approval", to: "/leave-approval" },
+       { label: "Leave Apply", to: "/leave-apply" },
+       { label: "Leave Reports", to: "/leave-reports" },
+       { label: "Leave holiday", to: "/holiday" }
+       
+      
+    ],
+  },
+   {
+    id: "notification",
+    label: "Notification",
+    items: [{ label: "Notification", to: "/notification-management" },
+      { label: "Notification Report", to: "/notification-reports" },
+      { label: "Add Notification", to: "/add-notification" }
+    ],
+  },
+  {
+    id: "homeworkManagement",
+    label: "Homework Management",
+    items: [{ label: "homeworkManagement", to: "/homework-management" },
+      { label: "homework-submission", to: "/homework-submission" },
+      { label: "Homework Evaluation", to: "/homework-evaluation" },
+      { label: "Homework Reports", to: "/homework-reports" }
+      
+    ],
+  },
+  
 ];
 
 const same = (a, b) => a.toLowerCase() === b.toLowerCase();
